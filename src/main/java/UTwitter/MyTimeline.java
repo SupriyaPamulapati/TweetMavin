@@ -14,10 +14,10 @@ public class MyTimeline {
 
                 ConfigurationBuilder cb = new ConfigurationBuilder();
                 cb.setDebugEnabled(true)
-                        .setOAuthConsumerKey("QU7m7SGTagpG4IlxEUWrph2uI")
-                        .setOAuthConsumerSecret("Lhr80fbsHYrHNPUa992OAAoeQEvNKToSZ5DqqTkgC4hKRnMycq")
-                        .setOAuthAccessToken("1450686116353376256-cY0gGRKOp3NyLOeD6i8ke6fzm0ttRk")
-                        .setOAuthAccessTokenSecret("KcuhOXd1MBnPw4qSgnWZ4oy25zRnJT2dha1XNzgje8AWv");
+                        .setOAuthConsumerKey("*********************")
+                        .setOAuthConsumerSecret("******************************************")
+                        .setOAuthAccessToken("**************************************************")
+                        .setOAuthAccessTokenSecret("******************************************");
                 TwitterFactory tf = new TwitterFactory(cb.build());
                 Twitter twitter = tf.getInstance();
 
