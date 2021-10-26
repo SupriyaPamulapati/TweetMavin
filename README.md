@@ -26,6 +26,7 @@ No 3rd party libraries should be manually downloaded and included.
 
 Added dropwizard as a dependency.
 Create configuration and any necessary files to configure dropwizard application to start up.
+
 Add the following REST endpoints
 Post tweet - Create a POST route. This route should take a single post parameter 'message' which will represent the message of the tweet. When called properly, this route will post the message to the Twitter account.
 Get timeline - Create a GET route. This route will retrieve a list of latest tweets from the home timeline.
