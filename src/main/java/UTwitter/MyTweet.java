@@ -10,10 +10,7 @@ import twitter4j.conf.ConfigurationBuilder;
 
 public class MyTweet extends Application<RestConfigurations> {
     public static void main(String[] args) throws Exception {
-
         new MyTweet().run(args);
-
-
     }
 
     @Override
