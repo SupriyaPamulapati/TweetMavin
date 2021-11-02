@@ -12,7 +12,6 @@ public class MyTweet extends Application<RestConfigurations> {
 
     @Override
     public void run(RestConfigurations restConfigurations, Environment environment) throws Exception {
-
         environment.jersey().register(new Resources());
 
     }
