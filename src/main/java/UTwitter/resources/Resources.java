@@ -43,7 +43,6 @@ import java.util.List;
                 return Response.status(200,"tweet posted").build();
             }
         }
-
         @GET
         @Path("/getTweets")
         public Object tweetGet() throws TwitterException {
