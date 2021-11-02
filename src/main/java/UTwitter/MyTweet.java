@@ -12,7 +12,7 @@ public class MyTweet extends Application<RestConfigurations> {
 
     @Override
     public void run(RestConfigurations restConfigurations, Environment environment) throws Exception {
-        System.out.println("haii");
+
         environment.jersey().register(new Resources());
 
     }
