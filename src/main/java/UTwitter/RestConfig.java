@@ -2,6 +2,5 @@ package UTwitter;
 
 import io.dropwizard.Configuration;
 
-public class RestConfigurations extends Configuration {
-
+public class RestConfig extends Configuration {
 }

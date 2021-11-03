@@ -5,6 +5,7 @@ import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -21,24 +22,6 @@ public class Resources {
     @Path("/healthCheck")
     public String healthCheck() {
         return "ping Received" + new Date();
-    }
-
-    @POST
-    @Path("/postTweets")
-    public Response tweetPost(Request request) {
-
-        Twitter twitter = TwitterFactory.getSingleton();
-        String post = request.getMsg();
-        if (StringUtil.isEmpty(post)) {
-            return Response.status(400, "please Enter a valid tweet").build();
-        } else {
-            try {
-                twitter.updateStatus(post);
-            } catch (TwitterException e) {
-                return Response.status(500, "the tweet is not successful").build();
-            }
-            return Response.status(200, "tweet posted").build();
-        }
     }
 
     @GET
@@ -65,5 +48,29 @@ public class Resources {
             return Response.ok(str).build();
         }
     }
+
+    @POST
+    @Path("/postTweets")
+    public Response tweetPost(Request request) {
+
+        Twitter twitter = TwitterFactory.getSingleton();
+        String post = request.getMsg();
+        if (StringUtil.isEmpty(post)) {
+            return Response.status(400, "please Enter a valid tweet").build();
+        } else {
+            try {
+
+                Status status = twitter.updateStatus(post);
+                if (status.getText().equals(post)) {
+                    return Response.status(200, "the tweet is successfully posted").build();
+                } else {
+                    return Response.status(500, "unable to process the request").build();
+                }
+            } catch (TwitterException e) {
+                return Response.status(500, "the tweet is not successful").build();
+            }
+        }
+    }
+
 }
 
