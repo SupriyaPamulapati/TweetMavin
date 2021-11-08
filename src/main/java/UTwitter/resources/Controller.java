@@ -12,12 +12,13 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Produces(MediaType.APPLICATION_JSON)
 @Path("api/1.0/twitter")
-public class Resources {
+public class Controller {
     @GET
     @Path("/healthCheck")
     public String healthCheck() {
@@ -26,7 +27,7 @@ public class Resources {
 
     @GET
     @Path("/getTweets")
-    public Response tweetGet() {
+    public Response getTweets() {
         Twitter twitter = TwitterFactory.getSingleton();
         List<Status> status = null;
         try {
@@ -49,10 +50,21 @@ public class Resources {
         }
     }
 
+    @GET
+    @Path("/getTweet")
+    public static ArrayList<String> timeline_Tweets() throws TwitterException {
+        Twitter twitter = TwitterFactory.getSingleton();
+        ArrayList<String> arrayList = new ArrayList<String>();
+        List<Status> status = twitter.getHomeTimeline();
+        for (Status st : status) {
+            arrayList.add(st.getText());
+        }
+        return arrayList;
+    }
+
     @POST
     @Path("/postTweets")
-    public Response tweetPost(Request request) {
-
+    public Response postTweets(MessageRequest request) {
         Twitter twitter = TwitterFactory.getSingleton();
         String post = request.getMsg();
         if (StringUtil.isEmpty(post)) {

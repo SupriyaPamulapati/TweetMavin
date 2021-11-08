@@ -1,6 +1,6 @@
 package UTwitter.resources;
 
-public class Request {
+public class MessageRequest {
     String msg;
     public String getMsg(){
         return msg;
