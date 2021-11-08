@@ -95,7 +95,6 @@ public class ResourcesTest {
         System.out.println(actualTweet);
     }
 
-
     @Test
     public void testcase_nullTweets_get() {
         when(tweetPost.getTweets()).thenReturn(Response.ok().build());
@@ -105,7 +104,6 @@ public class ResourcesTest {
         Assert.assertEquals(expectedTweet.getEntity(), actualTweet.getEntity());
         Assert.assertEquals(expectedTweet.getStatus(), actualTweet.getStatus());
     }
-
 
     @Test
     public void testcase_getTweetstimeline() throws TwitterException {
