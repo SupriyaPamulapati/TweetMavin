@@ -30,8 +30,7 @@ public class ResourcesTest {
     public void setUp() {
         restConfig = Mockito.mock(RestConfig.class);
         tweetPost = mock(Controller.class);
-        //tweetPost = new Controller();
-    }
+        }
 
     @Test
     public void testcase_check_EmptyPost() throws TwitterException {
