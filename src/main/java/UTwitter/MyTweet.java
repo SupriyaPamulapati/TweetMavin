@@ -1,6 +1,6 @@
 package UTwitter;
 
-import UTwitter.resources.Resources;
+import UTwitter.resources.Controller;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Environment;
 
@@ -12,6 +12,6 @@ public class MyTweet extends Application<RestConfig> {
 
     @Override
     public void run(RestConfig restConfigurations, Environment environment) throws Exception {
-        environment.jersey().register(new Resources());
+        environment.jersey().register(new Controller());
     }
 }
