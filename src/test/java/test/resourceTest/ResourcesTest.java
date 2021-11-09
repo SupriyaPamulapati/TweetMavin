@@ -141,14 +141,4 @@ public class ResourcesTest {
         Assert.assertEquals(expected, actual);
     }
 
-    @Test
-    public void testcase_searchTweets() throws TwitterException {
-        when(restConfig.configurationBuilder()).thenReturn(new ConfigurationBuilder());
-        Twitter twitter = TwitterFactory.getSingleton();
-        Query query = new Query("source:twitter4j SupriyaChowdar9");
-        QueryResult result = twitter.search(query);
-        for (Status status : result.getTweets()) {
-            System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
-        }
-    }
 }
