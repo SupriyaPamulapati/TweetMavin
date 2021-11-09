@@ -26,12 +26,11 @@ public class ResourcesTest {
     RestConfig restConfig;
 
 
-
     @Before
     public void setUp() {
         restConfig = Mockito.mock(RestConfig.class);
         tweetPost = mock(Controller.class);
-        }
+    }
 
     @Test
     public void testcase_check_EmptyPost() throws TwitterException {
@@ -40,9 +39,9 @@ public class ResourcesTest {
         String message = "good to go";
         boolean b;
         try {
-            Status actual= twitter.updateStatus(message);
+            Status actual = twitter.updateStatus(message);
             b = true;
-        }catch (Exception e){
+        } catch (Exception e) {
             b = false;
         }
         Assert.assertTrue(b);
@@ -62,7 +61,7 @@ public class ResourcesTest {
         String actualMessage = status.getText();
         Assert.assertEquals(expectedMessage, actualMessage);
     }
-    
+
     @Test
     public void testcase_unsuccessfulTweet() throws TwitterException {
         Twitter twitter = TwitterFactory.getSingleton();
@@ -88,7 +87,7 @@ public class ResourcesTest {
     }
 
     @Test
-    public void testcase_postLength(){
+    public void testcase_postLength() {
         when(restConfig.configurationBuilder()).thenReturn(new ConfigurationBuilder());
         ArrayList<String> str1 = new ArrayList<String>();
         str1.add("Tweet");
@@ -141,4 +140,26 @@ public class ResourcesTest {
         Assert.assertEquals(expected, actual);
     }
 
+    @Test
+    public void testcase_searchTweets() throws TwitterException {
+        when(restConfig.configurationBuilder()).thenReturn(new ConfigurationBuilder());
+        ArrayList<String> tweet = new ArrayList<String>();
+        tweet.add("Tweet1");
+        tweet.add("Tweet2");
+        tweet.add("Tweet3");
+        when(tweetPost.getTweets()).thenReturn(Response.ok(tweet).build());
+        Twitter twitter = TwitterFactory.getSingleton();
+        Query query = new Query("source:twitter4j SupriyaChowdar9");
+        QueryResult result = twitter.search(query);
+        boolean b = false;
+        try {
+            for (Status status : result.getTweets()) {
+                System.out.println(status);
+                b = true;
+            }
+        } catch (Exception e) {
+            b = false;
+        }
+        Assert.assertFalse(b);
+    }
 }
