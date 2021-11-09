@@ -26,10 +26,13 @@ public class ResourcesTest {
     RestConfig restConfig;
 
 
+
+
     @Before
     public void setUp() {
         restConfig = Mockito.mock(RestConfig.class);
         tweetPost = mock(Controller.class);
+
     }
 
     @Test
@@ -143,23 +146,18 @@ public class ResourcesTest {
     @Test
     public void testcase_searchTweets() throws TwitterException {
         when(restConfig.configurationBuilder()).thenReturn(new ConfigurationBuilder());
-        ArrayList<String> tweet = new ArrayList<String>();
-        tweet.add("Tweet1");
-        tweet.add("Tweet2");
-        tweet.add("Tweet3");
-        when(tweetPost.getTweets()).thenReturn(Response.ok(tweet).build());
         Twitter twitter = TwitterFactory.getSingleton();
-        Query query = new Query("source:twitter4j SupriyaChowdar9");
+        Query query = new Query("SupriyaChowdar9");
         QueryResult result = twitter.search(query);
         boolean b = false;
         try {
-            for (Status status : result.getTweets()) {
-                System.out.println(status);
+            for (Status sts : result.getTweets()) {
+                System.out.println("@" + sts.getUser().getScreenName() +sts.getText());
                 b = true;
             }
         } catch (Exception e) {
             b = false;
         }
-        Assert.assertFalse(b);
+        Assert.assertTrue(b);
     }
 }
