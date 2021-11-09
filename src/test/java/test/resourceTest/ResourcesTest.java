@@ -64,6 +64,7 @@ public class ResourcesTest {
         String actualMessage = status.getText();
         Assert.assertEquals(expectedMessage, actualMessage);
     }
+    
     @Test
     public void testcase_unsuccessfulTweet() throws TwitterException {
         Twitter twitter = TwitterFactory.getSingleton();
@@ -146,7 +147,6 @@ public class ResourcesTest {
     public void testcase_searchTweets() throws TwitterException {
         when(restConfig.configurationBuilder()).thenReturn(new ConfigurationBuilder());
         Twitter twitter = TwitterFactory.getSingleton();
-        ArrayList<String> arrayList = new ArrayList<String>();
         Query query = new Query("source:twitter4j SupriyaChowdar9");
         QueryResult result = twitter.search(query);
         for (Status status : result.getTweets()) {
