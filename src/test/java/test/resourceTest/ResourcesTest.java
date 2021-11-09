@@ -41,11 +41,9 @@ public class ResourcesTest {
         boolean b;
         try {
             Status actual= twitter.updateStatus(message);
-            System.out.println("Successfully updated the status to [" + actual.getText() + "].");
             b = true;
         }catch (Exception e){
             b = false;
-            System.out.println("unSuccessful request "+ e);
         }
         Assert.assertTrue(b);
     }
