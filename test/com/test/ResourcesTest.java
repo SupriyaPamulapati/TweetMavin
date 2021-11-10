@@ -1,4 +1,4 @@
-package test.resourceTest;
+package tweetmaventest;
 
 import UTwitter.RestConfig;
 import UTwitter.resources.Controller;
@@ -13,8 +13,10 @@ import twitter4j.*;
 import twitter4j.conf.ConfigurationBuilder;
 
 import javax.ws.rs.core.Response;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -37,9 +39,10 @@ public class ResourcesTest {
 
     @Test
     public void testcase_check_EmptyPost() throws TwitterException {
-        when(restConfig.configurationBuilder()).thenReturn(new ConfigurationBuilder());
         Twitter twitter = TwitterFactory.getSingleton();
-        String message = "good to go";
+        byte[] array = new byte[7]; // length is bounded by 7
+        new Random().nextBytes(array);
+        String message = new String(array, Charset.forName("UTF-8"));
         boolean b;
         try {
             Status actual = twitter.updateStatus(message);
@@ -54,22 +57,19 @@ public class ResourcesTest {
     public void test_post_RepeatedTweet() throws TwitterException {
         Twitter twitter = TwitterFactory.getSingleton();
         String expectedMessage = "Test";
-        when(restConfig.configurationBuilder()).thenReturn(new ConfigurationBuilder());
-        Status status = null;
+        int errorCode = 0;
         try {
-            status = twitter.updateStatus(expectedMessage);
+            twitter.updateStatus(expectedMessage);
         } catch (TwitterException e) {
-            e.printStackTrace();
+            errorCode = e.getStatusCode();
         }
-        String actualMessage = status.getText();
-        Assert.assertEquals(expectedMessage, actualMessage);
+        Assert.assertEquals(403, errorCode);
     }
 
     @Test
     public void testcase_unsuccessfulTweet() throws TwitterException {
         Twitter twitter = TwitterFactory.getSingleton();
         String expectedMessage = "";
-        when(restConfig.configurationBuilder()).thenReturn(new ConfigurationBuilder());
         Status status = null;
         try {
             status = twitter.updateStatus(expectedMessage);
@@ -91,7 +91,6 @@ public class ResourcesTest {
 
     @Test
     public void testcase_postLength() {
-        when(restConfig.configurationBuilder()).thenReturn(new ConfigurationBuilder());
         ArrayList<String> str1 = new ArrayList<String>();
         str1.add("Tweet");
         MessageRequest request = new MessageRequest();
@@ -107,7 +106,6 @@ public class ResourcesTest {
 
     @Test
     public void testcase_getTweets() throws TwitterException {
-        when(restConfig.configurationBuilder()).thenReturn(new ConfigurationBuilder());
         ArrayList<String> str = new ArrayList<String>();
         str.add("hii");
         when(tweetPost.getTweets()).thenReturn(Response.ok(str).build());
@@ -122,7 +120,6 @@ public class ResourcesTest {
     @Test
     public void testcase_nullTweets_get() {
         when(tweetPost.getTweets()).thenReturn(Response.ok().build());
-        when(restConfig.configurationBuilder()).thenReturn(new ConfigurationBuilder());
         Response expectedTweet = Response.ok().build();
         Response actualTweet = tweetPost.getTweets();
         Assert.assertEquals(expectedTweet.getEntity(), actualTweet.getEntity());
@@ -131,7 +128,6 @@ public class ResourcesTest {
 
     @Test
     public void testcase_getTweets_timeline() throws TwitterException {
-        when(restConfig.configurationBuilder()).thenReturn(new ConfigurationBuilder());
         Twitter twitter = TwitterFactory.getSingleton();
         ArrayList<String> arrayList = new ArrayList<String>();
         List<Status> status = twitter.getHomeTimeline();
@@ -145,7 +141,6 @@ public class ResourcesTest {
 
     @Test
     public void testcase_searchTweets() throws TwitterException {
-        when(restConfig.configurationBuilder()).thenReturn(new ConfigurationBuilder());
         Twitter twitter = TwitterFactory.getSingleton();
         Query query = new Query("SupriyaChowdar9");
         QueryResult result = twitter.search(query);
