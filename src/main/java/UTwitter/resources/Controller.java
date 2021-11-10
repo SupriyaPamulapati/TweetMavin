@@ -1,10 +1,12 @@
 package UTwitter.resources;
 
+import UTwitter.RestConfig;
 import org.eclipse.jetty.util.StringUtil;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
+import twitter4j.conf.ConfigurationBuilder;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -19,6 +21,17 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 @Path("api/1.0/twitter")
 public class Controller {
+   /* ConfigurationBuilder configurationBuilder;
+    TwitterFactory twitterFactory;
+    public Controller() {
+        configurationBuilder = RestConfig.configurationBuilder();
+        twitterFactory = new TwitterFactory(configurationBuilder.build());
+    }
+    public Controller(ConfigurationBuilder configurationBuilder, TwitterFactory twitterFactory) {
+        this.configurationBuilder = configurationBuilder;
+        this.twitterFactory = twitterFactory;
+    }*/
+
     @GET
     @Path("/healthCheck")
     public String healthCheck() {
