@@ -1,4 +1,4 @@
-package test.resourceTest;
+package tweetmaventest;
 
 import UTwitter.RestConfig;
 import UTwitter.resources.Controller;
@@ -39,7 +39,6 @@ public class ResourcesTest {
 
     @Test
     public void testcase_check_EmptyPost() throws TwitterException {
-        when(restConfig.configurationBuilder()).thenReturn(new ConfigurationBuilder());
         Twitter twitter = TwitterFactory.getSingleton();
         byte[] array = new byte[7]; // length is bounded by 7
         new Random().nextBytes(array);
@@ -58,22 +57,19 @@ public class ResourcesTest {
     public void test_post_RepeatedTweet() throws TwitterException {
         Twitter twitter = TwitterFactory.getSingleton();
         String expectedMessage = "Test";
-        when(restConfig.configurationBuilder()).thenReturn(new ConfigurationBuilder());
-        Status status = null;
+        int errorCode = 0;
         try {
-            status = twitter.updateStatus(expectedMessage);
+            twitter.updateStatus(expectedMessage);
         } catch (TwitterException e) {
-            e.printStackTrace();
+            errorCode = e.getStatusCode();
         }
-        String actualMessage = status.getText();
-        Assert.assertNotEquals(expectedMessage, actualMessage);
+        Assert.assertEquals(403, errorCode);
     }
 
     @Test
     public void testcase_unsuccessfulTweet() throws TwitterException {
         Twitter twitter = TwitterFactory.getSingleton();
         String expectedMessage = "";
-        when(restConfig.configurationBuilder()).thenReturn(new ConfigurationBuilder());
         Status status = null;
         try {
             status = twitter.updateStatus(expectedMessage);
@@ -95,7 +91,6 @@ public class ResourcesTest {
 
     @Test
     public void testcase_postLength() {
-        when(restConfig.configurationBuilder()).thenReturn(new ConfigurationBuilder());
         ArrayList<String> str1 = new ArrayList<String>();
         str1.add("Tweet");
         MessageRequest request = new MessageRequest();
@@ -111,7 +106,6 @@ public class ResourcesTest {
 
     @Test
     public void testcase_getTweets() throws TwitterException {
-        when(restConfig.configurationBuilder()).thenReturn(new ConfigurationBuilder());
         ArrayList<String> str = new ArrayList<String>();
         str.add("hii");
         when(tweetPost.getTweets()).thenReturn(Response.ok(str).build());
@@ -126,7 +120,6 @@ public class ResourcesTest {
     @Test
     public void testcase_nullTweets_get() {
         when(tweetPost.getTweets()).thenReturn(Response.ok().build());
-        when(restConfig.configurationBuilder()).thenReturn(new ConfigurationBuilder());
         Response expectedTweet = Response.ok().build();
         Response actualTweet = tweetPost.getTweets();
         Assert.assertEquals(expectedTweet.getEntity(), actualTweet.getEntity());
@@ -135,7 +128,6 @@ public class ResourcesTest {
 
     @Test
     public void testcase_getTweets_timeline() throws TwitterException {
-        when(restConfig.configurationBuilder()).thenReturn(new ConfigurationBuilder());
         Twitter twitter = TwitterFactory.getSingleton();
         ArrayList<String> arrayList = new ArrayList<String>();
         List<Status> status = twitter.getHomeTimeline();
@@ -149,7 +141,6 @@ public class ResourcesTest {
 
     @Test
     public void testcase_searchTweets() throws TwitterException {
-        when(restConfig.configurationBuilder()).thenReturn(new ConfigurationBuilder());
         Twitter twitter = TwitterFactory.getSingleton();
         Query query = new Query("SupriyaChowdar9");
         QueryResult result = twitter.search(query);
