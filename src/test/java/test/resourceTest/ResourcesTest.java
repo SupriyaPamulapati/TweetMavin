@@ -13,8 +13,10 @@ import twitter4j.*;
 import twitter4j.conf.ConfigurationBuilder;
 
 import javax.ws.rs.core.Response;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -39,7 +41,9 @@ public class ResourcesTest {
     public void testcase_check_EmptyPost() throws TwitterException {
         when(restConfig.configurationBuilder()).thenReturn(new ConfigurationBuilder());
         Twitter twitter = TwitterFactory.getSingleton();
-        String message = "good to go";
+        byte[] array = new byte[7]; // length is bounded by 7
+        new Random().nextBytes(array);
+        String message = new String(array, Charset.forName("UTF-8"));
         boolean b;
         try {
             Status actual = twitter.updateStatus(message);
@@ -62,7 +66,7 @@ public class ResourcesTest {
             e.printStackTrace();
         }
         String actualMessage = status.getText();
-        Assert.assertEquals(expectedMessage, actualMessage);
+        Assert.assertNotEquals(expectedMessage, actualMessage);
     }
 
     @Test
