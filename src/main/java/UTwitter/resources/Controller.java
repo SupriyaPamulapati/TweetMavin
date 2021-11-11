@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 @Produces(MediaType.APPLICATION_JSON)
 @Path("api/1.0/twitter")
 public class Controller {
-    private Logger log = LoggerFactory.getLogger(Controller.class);
+    private static final Logger log = LoggerFactory.getLogger(Controller.class);
 
     @GET
     @Path("/healthCheck")
@@ -64,6 +64,7 @@ public class Controller {
     @GET
     @Path("/getTweet")
     public static ArrayList<String> timeline_Tweets() throws TwitterException {
+        log.info("processing get Tweets");
         Twitter twitter = TwitterFactory.getSingleton();
         ArrayList<String> arrayList = new ArrayList<String>();
         List<Status> status = twitter.getHomeTimeline();
@@ -77,7 +78,6 @@ public class Controller {
     @Path("/postTweets")
     public Response postTweets(MessageRequest request) {
         log.info("Processing post request");
-        log.info("post");
         Twitter twitter = TwitterFactory.getSingleton();
         String post = request.getMsg();
         if (StringUtil.isEmpty(post)) {
