@@ -1,4 +1,4 @@
-package tweetmaventest;
+package com.test;
 
 import UTwitter.RestConfig;
 import UTwitter.resources.Controller;
@@ -33,7 +33,7 @@ public class ResourcesTest {
     @Before
     public void setUp() {
         restConfig = Mockito.mock(RestConfig.class);
-        tweetPost = mock(Controller.class);
+        tweetPost = Mockito.mock(Controller.class);
 
     }
 
@@ -56,14 +56,14 @@ public class ResourcesTest {
     @Test
     public void test_post_RepeatedTweet() throws TwitterException {
         Twitter twitter = TwitterFactory.getSingleton();
-        String expectedMessage = "Test";
+        String expectedMessage = "Test...";
         int errorCode = 0;
         try {
             twitter.updateStatus(expectedMessage);
         } catch (TwitterException e) {
             errorCode = e.getStatusCode();
         }
-        Assert.assertEquals(403, errorCode);
+        Assert.assertEquals(403,errorCode);
     }
 
     @Test
