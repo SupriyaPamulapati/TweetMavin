@@ -36,7 +36,6 @@ public class Controller {
     @Path("/getTweets")
     public Response getTweets() {
         log.info("Processing get request");
-        log.info("get");
         Twitter twitter = TwitterFactory.getSingleton();
         List<Status> status = null;
         try {
@@ -55,8 +54,8 @@ public class Controller {
             for (Status st : status) {
                 str[i] = st.getUser().getName() + "-------" + st.getText();
                 i++;
-                log.info("Successfully retrieved Tweets");
             }
+            log.info("Successfully retrieved Tweets");
             return Response.ok(str).build();
         }
     }
