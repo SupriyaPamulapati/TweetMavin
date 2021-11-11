@@ -21,16 +21,6 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 @Path("api/1.0/twitter")
 public class Controller {
-   /* ConfigurationBuilder configurationBuilder;
-    TwitterFactory twitterFactory;
-    public Controller() {
-        configurationBuilder = RestConfig.configurationBuilder();
-        twitterFactory = new TwitterFactory(configurationBuilder.build());
-    }
-    public Controller(ConfigurationBuilder configurationBuilder, TwitterFactory twitterFactory) {
-        this.configurationBuilder = configurationBuilder;
-        this.twitterFactory = twitterFactory;
-    }*/
 
     @GET
     @Path("/healthCheck")
