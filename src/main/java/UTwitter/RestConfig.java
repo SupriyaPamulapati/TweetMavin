@@ -1,11 +1,11 @@
 package UTwitter;
 
 import io.dropwizard.Configuration;
+import twitter4j.conf.ConfigurationBuilder;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
-import twitter4j.conf.ConfigurationBuilder;
 
 public class RestConfig extends Configuration {
     String filepath="twitter4j.yml";

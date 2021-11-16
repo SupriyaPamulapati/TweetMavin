@@ -1,11 +1,19 @@
 package UTwitter.resources;
 
+
 public class MessageRequest {
     String msg;
-    public String getMsg(){
+
+    public MessageRequest() {
+    }
+
+
+    public String getMsg() {
         return msg;
     }
-    public void setMsg(String msg){
-        this.msg=msg;
+
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
+
 }
