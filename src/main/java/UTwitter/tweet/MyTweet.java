@@ -12,7 +12,6 @@ public class MyTweet extends Application<RestConfig> {
     RestConfig restConfig;
     Environment environment;
     private static Logger logger= LoggerFactory.getLogger(MyTweet.class);
-
     public MyTweet(RestConfig restConfig, Environment environment) {
         this.restConfig = restConfig;
         this.environment = environment;

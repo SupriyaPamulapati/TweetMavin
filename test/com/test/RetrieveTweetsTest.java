@@ -1,8 +1,9 @@
 package com.test;
 
+import UTwitter.resources.Controller;
 import UTwitter.resources.MessageRequest;
-import UTwitter.service.PostTweet;
-import UTwitter.service.RetrieveTweets;
+import UTwitter.resources.PostTweet;
+import UTwitter.resources.RetrieveTweets;
 import UTwitter.service.TwitterImplement;
 import org.junit.Assert;
 import org.junit.Before;
@@ -10,22 +11,21 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import twitter4j.ResponseList;
-import twitter4j.Status;
-import twitter4j.Twitter;
-import twitter4j.TwitterException;
+import twitter4j.*;
 
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.mockito.Mockito.when;
 
 
 @RunWith(MockitoJUnitRunner.class)
-public class ServTest {
+public class RetrieveTweetsTest {
+    Controller tweetPost;
     PostTweet postTweet;
     Status status;
-    MessageRequest Request;
+    MessageRequest messageRequest;
 
     TwitterImplement twitterImplement;
     RetrieveTweets getTimelineTweets;
@@ -37,33 +37,59 @@ public class ServTest {
 
     @Before
     public void setUp() {
+        tweetPost = Mockito.mock(Controller.class);
         twitter = Mockito.mock(Twitter.class);
         twitterImplement = Mockito.mock(TwitterImplement.class);
         s1 = Mockito.mock(Status.class);
         s2 = Mockito.mock(Status.class);
         s3 = Mockito.mock(Status.class);
         responseList = Mockito.mock(ResponseList.class);
-        getTimelineTweets = new RetrieveTweets(twitterImplement);
+        getTimelineTweets = new RetrieveTweets();
 
         status = Mockito.mock(Status.class);
-        postTweet = new PostTweet(twitterImplement);
+        postTweet = new PostTweet();
+        messageRequest = new  MessageRequest();
     }
-
     @Test
-    public void testCase_sendTweet_successCase() throws TwitterException {
-        Request.setMsg("Sad moment missing Home");
-        String expectedTweet = Request.getMsg();
+    public void testcase_searchTweets() throws TwitterException {
         when(twitterImplement.getTwitterObject()).thenReturn(twitter);
-        when(twitter.updateStatus(expectedTweet)).thenReturn(status);
-        when(status.getText()).thenReturn(expectedTweet);
-        Status status = null;
+        Twitter twitter = TwitterFactory.getSingleton();
+        Query query = new Query("SupriyaChowdar9");
+        QueryResult result = twitter.search(query);
+        boolean b = false;
         try {
-            status = PostTweet.sendTweet(expectedTweet);
-        } catch (TwitterException e) {
-            //logger.error("Exception Occur",e);
+            for (Status sts : result.getTweets()) {
+                System.out.println("@" + sts.getUser().getScreenName() +sts.getText());
+                b = true;
+            }
+        } catch (Exception e) {
+            b = false;
         }
-        String actualTweet = status.getText();
-        Assert.assertEquals(expectedTweet, actualTweet);
+        Assert.assertTrue(b);
+    }
+    @Test
+    public void testcase1_getTweets() {
+        when(twitterImplement.getTwitterObject()).thenReturn(twitter);
+        MessageRequest req = null;
+        ArrayList<String> str = new ArrayList<String>();
+        str.add("hlo");
+        when(tweetPost.fetchTweets()).thenReturn(Response.ok(str).build());
+        ArrayList<String> arrayList = new ArrayList<String>();
+        arrayList.add("hlo");
+        Response expectedTweet = Response.ok(arrayList).build();
+        Response actualTweet = tweetPost.fetchTweets();
+        Assert.assertEquals(expectedTweet.getStatus(), actualTweet.getStatus());
+        Assert.assertEquals(expectedTweet.getStatus(), actualTweet.getStatus());
+    }
+    @Test
+    public void testcase_noTweetsFound() {
+        MessageRequest req = null;
+        when(twitterImplement.getTwitterObject()).thenReturn(twitter);
+        when(tweetPost.fetchTweets()).thenReturn(Response.ok().build());
+        Response expectedTweet = Response.ok(req).build();
+        Response actualTweet = tweetPost.fetchTweets();
+        Assert.assertEquals(expectedTweet.getEntity(), actualTweet.getEntity());
+        Assert.assertEquals(expectedTweet.getStatus(), actualTweet.getStatus());
     }
 
     @Test
@@ -83,7 +109,7 @@ public class ServTest {
         when(s3.getText()).thenReturn("Tweet3");
         Response responseExpected = Response.ok(Arrays.asList("Tweet1", "Tweet2", "Tweet3")).build();
         Response responseActual = getTimelineTweets.myTimeline();
-        Assert.assertEquals(responseExpected.getLength(), responseActual.getLength());
+        Assert.assertEquals(responseExpected.getEntity(), responseActual.getEntity());
     }
 
     @Test

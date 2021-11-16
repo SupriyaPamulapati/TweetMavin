@@ -1,8 +1,5 @@
 package UTwitter.resources;
 
-import UTwitter.service.PostTweet;
-import UTwitter.service.RetrieveTweets;
-import UTwitter.service.TwitterImplement;
 import org.eclipse.jetty.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,25 +19,16 @@ public class Controller {
     MessageRequest request;
     PostTweet postTweet;
     RetrieveTweets retrieveTweets;
-    TwitterImplement twitterImplement = new TwitterImplement();
 
-    public Controller(MessageRequest request, PostTweet postTweet, RetrieveTweets retrieveTweets, TwitterImplement twitterImplement) {
+
+    public Controller(MessageRequest request, PostTweet postTweet, RetrieveTweets retrieveTweets) {
         this.request = request;
         this.postTweet = postTweet;
         this.retrieveTweets = retrieveTweets;
-        this.twitterImplement = twitterImplement;
     }
 
     public Controller() {
     }
-
-    @GET
-    @Path("GetTweets")
-    public Response fetchTweets(MessageRequest request) {
-        RetrieveTweets retrieveTweets = request.getRetrieveTweetsObject(twitterImplement);
-        return retrieveTweets.myTimeline();
-    }
-
 
     @GET
     @Path("/healthCheck")
@@ -48,8 +36,15 @@ public class Controller {
         return "Ping Received at " + new Date();
     }
 
+    @GET
+    @Path("getTweets")
+    public Response fetchTweets() {
+        RetrieveTweets retrieveTweets = new RetrieveTweets();
+        return retrieveTweets.myTimeline();
+    }
+
     @POST
-    @Path("/tweetAgain")
+    @Path("/postTweets")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response sendTweet(MessageRequest request) throws TwitterException {
         logger.info("got into post");
@@ -58,7 +53,7 @@ public class Controller {
             logger.error("error happened");
             return Response.status(400, "Please enter valid tweet").build();
         } else {
-            PostTweet postTweet = request.getSendTweetObject(twitterImplement);
+            PostTweet postTweet = new PostTweet();
             Status status = postTweet.sendTweet(post);
             if (status.getText().equals(post)) {
                 logger.info("successfully posted");
