@@ -28,4 +28,12 @@ public class TwitterImplement {
         Twitter twitter = twitterFactory.getInstance();
         return twitter;
     }
+    public PostTweet getSendTweetObject()
+    {
+        return new PostTweet(this);
+    }
+    public RetrieveTweets getRetrieveTweetsObject()
+    {
+        return new RetrieveTweets(this);
+    }
 }

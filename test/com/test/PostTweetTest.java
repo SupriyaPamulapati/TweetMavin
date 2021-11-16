@@ -3,7 +3,7 @@ package com.test;
 import UTwitter.RestConfig;
 import UTwitter.resources.Controller;
 import UTwitter.resources.MessageRequest;
-import UTwitter.resources.PostTweet;
+import UTwitter.service.PostTweet;
 import UTwitter.service.TwitterImplement;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,10 +13,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import twitter4j.*;
 import twitter4j.conf.ConfigurationBuilder;
-
-
-import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 
 
 import static org.mockito.Mockito.when;
@@ -57,7 +53,7 @@ public class PostTweetTest {
 
     @Test
     public void testcase_check_EmptyPost() throws TwitterException {
-        String arr = "My test Case";
+        String arr = "hayy...My test Case";
         when(twitterImplement.getTwitterObject()).thenReturn(twitter);
         when(twitter.updateStatus(arr)).thenReturn(status);
         Twitter twitter = TwitterFactory.getSingleton();
@@ -74,7 +70,7 @@ public class PostTweetTest {
 
     @Test
     public void test_post_RepeatedTweet() throws TwitterException {
-        String str = "Hii all Have a Good Day";
+        String str = "mmmHii all Have a Good Day.. n good to work";
         Twitter twitter = TwitterFactory.getSingleton();
         int expected = 403;
         int errorCode = 0;
@@ -88,19 +84,33 @@ public class PostTweetTest {
 
     @Test
     public void testCase_sendTweet_successCase() throws TwitterException {
-        String msg = "Happy to b Happy";
-        messageRequest.setMsg(msg);
-        String expectedTweet = messageRequest.getMsg();
+       messageRequest.setMsg("ita gonna b good");
+       String expectedTweet = messageRequest.getMsg();
         when(twitterImplement.getTwitterObject()).thenReturn(twitter);
         when(twitter.updateStatus(expectedTweet)).thenReturn(status);
         when(status.getText()).thenReturn(expectedTweet);
         Status status = null;
         try {
-            status = PostTweet.sendTweet(expectedTweet);
+            status = postTweet.sendTweet(expectedTweet);
         } catch (TwitterException e) {
         }
         String actualTweet = status.getText();
         Assert.assertEquals(expectedTweet, actualTweet);
+    }
+
+    @Test
+    public void test_postToTwitterUsingTwitter4J() {
+        Twitter twitter = TwitterFactory.getSingleton();
+        String expectedMessage = "Test";
+        when(restConfig.configurationBuilder()).thenReturn(new ConfigurationBuilder());
+        Status status = null;
+        try {
+            status = twitter.updateStatus(expectedMessage);
+        } catch (TwitterException e) {
+            e.printStackTrace();
+        }
+        String actualMessage = status.getText();
+        Assert.assertEquals(expectedMessage, actualMessage);
     }
 
     @Test

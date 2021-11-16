@@ -1,5 +1,8 @@
 package UTwitter.resources;
 
+import UTwitter.service.PostTweet;
+import UTwitter.service.RetrieveTweets;
+import UTwitter.service.TwitterImplement;
 import org.eclipse.jetty.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,15 +22,18 @@ public class Controller {
     MessageRequest request;
     PostTweet postTweet;
     RetrieveTweets retrieveTweets;
+    TwitterImplement twitterImplement;
 
 
-    public Controller(MessageRequest request, PostTweet postTweet, RetrieveTweets retrieveTweets) {
+    public Controller(MessageRequest request, PostTweet postTweet, RetrieveTweets retrieveTweets, TwitterImplement twitterImplement) {
         this.request = request;
         this.postTweet = postTweet;
         this.retrieveTweets = retrieveTweets;
+        this.twitterImplement = twitterImplement;
     }
 
     public Controller() {
+        twitterImplement = new TwitterImplement();
     }
 
     @GET
@@ -39,8 +45,8 @@ public class Controller {
     @GET
     @Path("getTweets")
     public Response fetchTweets() {
-        RetrieveTweets retrieveTweets = new RetrieveTweets();
-        return retrieveTweets.myTimeline();
+        RetrieveTweets retrieveTweets = twitterImplement.getRetrieveTweetsObject();
+        return Response.ok(retrieveTweets.myTimeline()).build();
     }
 
     @POST
@@ -53,7 +59,7 @@ public class Controller {
             logger.error("error happened");
             return Response.status(400, "Please enter valid tweet").build();
         } else {
-            PostTweet postTweet = new PostTweet();
+            PostTweet postTweet = twitterImplement.getSendTweetObject();
             Status status = postTweet.sendTweet(post);
             if (status.getText().equals(post)) {
                 logger.info("successfully posted");

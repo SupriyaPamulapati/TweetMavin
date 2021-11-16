@@ -1,8 +1,11 @@
 package UTwitter.resources;
 
 
+import UTwitter.service.TwitterImplement;
+
 public class MessageRequest {
     String msg;
+    TwitterImplement twitterImplement;
 
     public MessageRequest() {
 

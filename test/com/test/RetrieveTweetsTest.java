@@ -2,8 +2,8 @@ package com.test;
 
 import UTwitter.resources.Controller;
 import UTwitter.resources.MessageRequest;
-import UTwitter.resources.PostTweet;
-import UTwitter.resources.RetrieveTweets;
+import UTwitter.service.PostTweet;
+import UTwitter.service.RetrieveTweets;
 import UTwitter.service.TwitterImplement;
 import org.junit.Assert;
 import org.junit.Before;
@@ -108,7 +108,7 @@ public class RetrieveTweetsTest {
         when(responseList.get(3)).thenReturn(s3);
         when(s3.getText()).thenReturn("Tweet3");
         Response responseExpected = Response.ok(Arrays.asList("Tweet1", "Tweet2", "Tweet3")).build();
-        Response responseActual = getTimelineTweets.myTimeline();
+        Response responseActual = Response.ok(getTimelineTweets.myTimeline()).build();
         Assert.assertEquals(responseExpected.getEntity(), responseActual.getEntity());
     }
 
@@ -120,7 +120,7 @@ public class RetrieveTweetsTest {
         when(twitterImplement.getTwitterObject()).thenReturn(twitter);
         when(twitter.getHomeTimeline()).thenReturn(responseList);
         Response responseExpected = Response.ok(responseList).build();
-        Response responseActual = getTimelineTweets.myTimeline();
+        Response responseActual = Response.ok(getTimelineTweets.myTimeline()).build();
         Assert.assertEquals(responseExpected.getLength(), responseActual.getLength());
 
     }
