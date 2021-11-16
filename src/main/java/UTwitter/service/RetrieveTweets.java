@@ -14,7 +14,6 @@ public class RetrieveTweets {
     Logger log = LoggerFactory.getLogger(RetrieveTweets.class);
 
     public RetrieveTweets(){
-
     }
     public RetrieveTweets(TwitterImplement twitterImplement){
         this.twitterImplement=twitterImplement;
