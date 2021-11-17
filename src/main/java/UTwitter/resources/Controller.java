@@ -1,7 +1,5 @@
 package UTwitter.resources;
 
-import UTwitter.service.PostTweet;
-import UTwitter.service.RetrieveTweets;
 import UTwitter.service.TwitterImplement;
 import org.eclipse.jetty.util.StringUtil;
 import org.slf4j.Logger;
@@ -13,22 +11,17 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Date;
+import java.util.List;
 
 
 @Produces(MediaType.APPLICATION_JSON)
 @Path("/api/1.0/twitter")
 public class Controller {
     public static final Logger logger = LoggerFactory.getLogger(Controller.class);
-    MessageRequest request;
-    PostTweet postTweet;
-    RetrieveTweets retrieveTweets;
     TwitterImplement twitterImplement;
 
 
-    public Controller(MessageRequest request, PostTweet postTweet, RetrieveTweets retrieveTweets, TwitterImplement twitterImplement) {
-        this.request = request;
-        this.postTweet = postTweet;
-        this.retrieveTweets = retrieveTweets;
+    public Controller(TwitterImplement twitterImplement) {
         this.twitterImplement = twitterImplement;
     }
 
@@ -45,8 +38,13 @@ public class Controller {
     @GET
     @Path("getTweets")
     public Response fetchTweets() {
-        RetrieveTweets retrieveTweets = twitterImplement.getRetrieveTweetsObject();
-        return Response.ok(retrieveTweets.myTimeline()).build();
+        List<String> msg = null;
+        try {
+            msg = twitterImplement.GetTweets();
+        } catch (Exception e) {
+            logger.error("noo Tweet Found");
+        }
+        return Response.ok(msg).build();
     }
 
     @POST
@@ -59,8 +57,7 @@ public class Controller {
             logger.error("error happened");
             return Response.status(400, "Please enter valid tweet").build();
         } else {
-            PostTweet postTweet = twitterImplement.getSendTweetObject();
-            Status status = postTweet.sendTweet(post);
+            Status status = twitterImplement.sendTweet(post);
             if (status.getText().equals(post)) {
                 logger.info("successfully posted");
                 return Response.status(200, "Request is successful").build();
@@ -71,5 +68,6 @@ public class Controller {
         }
 
     }
+
 
 }

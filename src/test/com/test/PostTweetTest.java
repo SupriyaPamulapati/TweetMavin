@@ -1,6 +1,5 @@
 package com.test;
 
-import UTwitter.RestConfig;
 import UTwitter.resources.Controller;
 import UTwitter.resources.MessageRequest;
 import UTwitter.service.PostTweet;
@@ -11,50 +10,41 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import twitter4j.*;
-import twitter4j.conf.ConfigurationBuilder;
 
 
+import javax.ws.rs.core.Response;
+
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 
 @RunWith(MockitoJUnitRunner.class)
 public class PostTweetTest {
-    Controller tweetPost;
-    PostTweet postTweet;
+    Controller controller;
+    TwitterFactory twitterFactory;
     Status status;
-    RestConfig restConfig;
     TwitterImplement twitterImplement;
     MessageRequest messageRequest;
     Twitter twitter;
-    Status s1;
-    Status s2;
-    Status s3;
-    ResponseList<Status> responseList;
-
+   Logger log = LoggerFactory.getLogger(PostTweet.class);
     @Before
     public void setUp() {
-        tweetPost = Mockito.mock(Controller.class);
-        twitter = Mockito.mock(Twitter.class);
-        twitterImplement = Mockito.mock(TwitterImplement.class);
-        restConfig = Mockito.mock(RestConfig.class);
-        tweetPost = new Controller();
-
-        messageRequest = new  MessageRequest();
-        s1 = Mockito.mock(Status.class);
-        s2 = Mockito.mock(Status.class);
-        s3 = Mockito.mock(Status.class);
-
-
         status = Mockito.mock(Status.class);
-        postTweet = new PostTweet();
+        twitter = mock(Twitter.class);
+        twitterFactory  = mock(TwitterFactory.class);
+        when(twitterFactory.getInstance()).thenReturn(twitter);
+        twitterImplement = new TwitterImplement(twitterFactory);
+        messageRequest = new MessageRequest();
+        controller = new Controller();
 
     }
 
     @Test
     public void testcase_check_EmptyPost() throws TwitterException {
-        String arr = "hayy...My test Case";
-        when(twitterImplement.getTwitterObject()).thenReturn(twitter);
+        String arr = ".hayy...  haii    My test Case..";
         when(twitter.updateStatus(arr)).thenReturn(status);
         Twitter twitter = TwitterFactory.getSingleton();
         boolean b;
@@ -70,7 +60,7 @@ public class PostTweetTest {
 
     @Test
     public void test_post_RepeatedTweet() throws TwitterException {
-        String str = "mmmHii all Have a Good Day.. n good to work";
+        String str = "mmmHii all Have a Good Day.. n good to work...";
         Twitter twitter = TwitterFactory.getSingleton();
         int expected = 403;
         int errorCode = 0;
@@ -84,16 +74,10 @@ public class PostTweetTest {
 
     @Test
     public void testCase_sendTweet_successCase() throws TwitterException {
-       messageRequest.setMsg("ita gonna b good");
+       messageRequest.setMsg("..its gonna b good..");
        String expectedTweet = messageRequest.getMsg();
-        when(twitterImplement.getTwitterObject()).thenReturn(twitter);
         when(twitter.updateStatus(expectedTweet)).thenReturn(status);
         when(status.getText()).thenReturn(expectedTweet);
-        Status status = null;
-        try {
-            status = postTweet.sendTweet(expectedTweet);
-        } catch (TwitterException e) {
-        }
         String actualTweet = status.getText();
         Assert.assertEquals(expectedTweet, actualTweet);
     }
@@ -101,40 +85,24 @@ public class PostTweetTest {
     @Test
     public void test_postToTwitterUsingTwitter4J() {
         Twitter twitter = TwitterFactory.getSingleton();
-        String expectedMessage = "Test";
-        when(restConfig.configurationBuilder()).thenReturn(new ConfigurationBuilder());
-        Status status = null;
+        String expectedMessage = "....Test....,";
+        Status statuses = null;
         try {
-            status = twitter.updateStatus(expectedMessage);
+            statuses = twitter.updateStatus(expectedMessage);
         } catch (TwitterException e) {
             e.printStackTrace();
         }
+        when(status.getText()).thenReturn(expectedMessage);
         String actualMessage = status.getText();
         Assert.assertEquals(expectedMessage, actualMessage);
     }
 
     @Test
-    public void testcase_unsuccessfulTweet() {
-        Twitter twitter = TwitterFactory.getSingleton();
-        String expectedMessage = "";
-        when(restConfig.configurationBuilder()).thenReturn(new ConfigurationBuilder());
-        Status status = null;
-        try {
-            status = twitter.updateStatus(expectedMessage);
-        } catch (TwitterException e) {
-            e.printStackTrace();
-        }
-        int expectedLength = 0;
-        int actualLength = 0;
-        String actualMessage = "";
-        if (status != null) {
-            expectedLength = expectedMessage.length();
-            actualLength = 0;
-        } else {
-            expectedLength = expectedMessage.length();
-            actualLength = actualMessage.length();
-        }
-        Assert.assertEquals(expectedLength, actualLength);
+    public void testcase_nullTweet() throws TwitterException {
+        MessageRequest messageRequest = new MessageRequest("");
+         Response actual = controller.sendTweet(messageRequest);
+         Response expected = Response.ok().build();
+        Assert.assertEquals(expected.getEntity() , actual.getEntity());
     }
 
 
