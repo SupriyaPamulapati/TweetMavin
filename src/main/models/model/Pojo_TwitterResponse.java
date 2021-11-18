@@ -1,7 +1,5 @@
 package model;
 
-import twitter4j.Status;
-
 import java.util.ArrayList;
 import java.util.List;
 

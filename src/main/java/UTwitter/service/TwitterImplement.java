@@ -11,7 +11,6 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -50,13 +49,13 @@ public class TwitterImplement {
         List<String> twitterHandle = null;
         try {
             List<Status> statuses = twitter.getHomeTimeline();
-            user.setName("User Name :"+statuses.get(0).getUser().getName());
-            user.setProfileURL("profile URL"+statuses.get(0).getUser().getProfileImageURL());
+            user.setName("User Name :" + statuses.get(0).getUser().getName());
+            user.setProfileURL("profile URL" + statuses.get(0).getUser().getProfileImageURL());
             for (int i = 0; i < statuses.size(); i++) {
                 Status status = statuses.get(i);
-                user.setUserHandle("@"+status.getUser().getScreenName()+"  "+status.getText()+"  @Date-"+status.getCreatedAt()+"  "+status.getURLEntities());
+                user.setUserHandle("@" + status.getUser().getScreenName() + "  " + status.getText() + "  @Date-" + status.getCreatedAt() + "  " + status.getURLEntities());
             }
-            twitterHandle=pojo_twitterResponse.getTwitterTimelineList();
+            twitterHandle = pojo_twitterResponse.getTwitterTimelineList();
         } catch (TwitterException e) {
             log.error("error in retrieving tweets ");
         }
