@@ -9,9 +9,10 @@ import org.slf4j.LoggerFactory;
 
 
 public class MyTweet extends Application<RestConfig> {
+    private static final Logger logger = LoggerFactory.getLogger(MyTweet.class);
     RestConfig restConfig;
     Environment environment;
-    private static Logger logger= LoggerFactory.getLogger(MyTweet.class);
+
     public MyTweet(RestConfig restConfig, Environment environment) {
         this.restConfig = restConfig;
         this.environment = environment;

@@ -2,19 +2,21 @@ package UTwitter;
 
 import io.dropwizard.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
 public class RestConfig extends Configuration {
-    String filepath="twitter4j.yml";
-    static String accessTokenSecret="";
-    static String consumerSecret="";
-     String consumerKey="";
-     String accessToken="";
-    Properties properties=new Properties();
+    static String accessTokenSecret = "";
+    static String consumerSecret = "";
+    String filepath = "twitter4j.yml";
+    String consumerKey = "";
+    String accessToken = "";
+    Properties properties = new Properties();
     FileInputStream fileInputStream;
+
     {
         try {
             fileInputStream = new FileInputStream(filepath);
@@ -26,11 +28,12 @@ public class RestConfig extends Configuration {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        accessTokenSecret= properties.getProperty("accessTokenSecret");
-        consumerSecret= properties.getProperty("consumerSecret");
-        consumerKey= properties.getProperty("consumerKey");
-        accessToken= properties.getProperty("accessToken");
+        accessTokenSecret = properties.getProperty("accessTokenSecret");
+        consumerSecret = properties.getProperty("consumerSecret");
+        consumerKey = properties.getProperty("consumerKey");
+        accessToken = properties.getProperty("accessToken");
     }
+
     public ConfigurationBuilder configurationBuilder() {
         ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
         configurationBuilder.setDebugEnabled(true)
