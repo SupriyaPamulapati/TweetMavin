@@ -40,17 +40,17 @@ public class TwitterImplement {
         return status;
     }
 
-    public ArrayList<String> GetTweets(){
+    public ArrayList<String> GetTweets() {
         ArrayList<String> arrayList = new ArrayList<>();
         try {
             List<Status> statuses = twitter.getHomeTimeline();
-            for (int i=0;i<statuses.size();i++) {
+            for (int i = 0; i < statuses.size(); i++) {
                 Status status = statuses.get(i);
                 arrayList.add(status.getText());
             }
         } catch (TwitterException e) {
             log.error("error in retrieving tweets ");
-            if(arrayList.isEmpty()){
+            if (arrayList.isEmpty()) {
                 log.error("no Tweets, Empty timeline");
                 arrayList.add("No Tweets found");
             }

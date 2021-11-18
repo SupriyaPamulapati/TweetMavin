@@ -12,8 +12,10 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import twitter4j.*;
-
+import twitter4j.Status;
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
 
 import javax.ws.rs.core.Response;
 
@@ -22,19 +24,20 @@ import static org.mockito.Mockito.when;
 
 
 @RunWith(MockitoJUnitRunner.class)
-public class PostTweetTest {
+public class PostTweetTest_implement {
     Controller controller;
     TwitterFactory twitterFactory;
     Status status;
     TwitterImplement twitterImplement;
     MessageRequest messageRequest;
     Twitter twitter;
-   Logger log = LoggerFactory.getLogger(PostTweet.class);
+    Logger log = LoggerFactory.getLogger(PostTweet.class);
+
     @Before
     public void setUp() {
         status = Mockito.mock(Status.class);
         twitter = mock(Twitter.class);
-        twitterFactory  = mock(TwitterFactory.class);
+        twitterFactory = mock(TwitterFactory.class);
         when(twitterFactory.getInstance()).thenReturn(twitter);
         twitterImplement = new TwitterImplement(twitterFactory);
         messageRequest = new MessageRequest();
@@ -49,7 +52,7 @@ public class PostTweetTest {
         Twitter twitter = TwitterFactory.getSingleton();
         boolean b;
         try {
-            if (arr.length()!=0)
+            if (arr.length() != 0)
                 status = twitter.updateStatus(arr);
             b = true;
         } catch (Exception e) {
@@ -74,8 +77,8 @@ public class PostTweetTest {
 
     @Test
     public void testCase_sendTweet_successCase() throws TwitterException {
-       messageRequest.setMsg("..its gonna b good..");
-       String expectedTweet = messageRequest.getMsg();
+        messageRequest.setMsg("..its gonna b good..");
+        String expectedTweet = messageRequest.getMsg();
         when(twitter.updateStatus(expectedTweet)).thenReturn(status);
         when(status.getText()).thenReturn(expectedTweet);
         String actualTweet = status.getText();
@@ -100,9 +103,9 @@ public class PostTweetTest {
     @Test
     public void testcase_nullTweet() throws TwitterException {
         MessageRequest messageRequest = new MessageRequest("");
-         Response actual = controller.sendTweet(messageRequest);
-         Response expected = Response.ok().build();
-        Assert.assertEquals(expected.getEntity() , actual.getEntity());
+        Response actual = controller.sendTweet(messageRequest);
+        Response expected = Response.ok().build();
+        Assert.assertEquals(expected.getEntity(), actual.getEntity());
     }
 
 

@@ -11,7 +11,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import twitter4j.*;
 
-
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,7 +21,7 @@ import static org.mockito.Mockito.when;
 
 
 @RunWith(MockitoJUnitRunner.class)
-public class RetrieveTweetsTest {
+public class RetrieveTweetsTest_implement {
     Controller tweetPost;
     TwitterFactory twitterFactory;
     TwitterImplement twitterImplement;
@@ -33,10 +32,11 @@ public class RetrieveTweetsTest {
     public void setUp() {
         tweetPost = Mockito.mock(Controller.class);
         twitter = mock(Twitter.class);
-        twitterFactory  = mock(TwitterFactory.class);
+        twitterFactory = mock(TwitterFactory.class);
         when(twitterFactory.getInstance()).thenReturn(twitter);
         twitterImplement = new TwitterImplement(twitterFactory);
     }
+
     @Test
     public void testcase_searchTweets() throws TwitterException {
         Twitter twitter = TwitterFactory.getSingleton();
@@ -45,7 +45,7 @@ public class RetrieveTweetsTest {
         boolean b = false;
         try {
             for (Status sts : result.getTweets()) {
-                System.out.println("@" + sts.getUser().getScreenName() +sts.getText());
+                System.out.println("@" + sts.getUser().getScreenName() + sts.getText());
                 b = true;
             }
         } catch (Exception e) {
@@ -53,6 +53,7 @@ public class RetrieveTweetsTest {
         }
         Assert.assertTrue(b);
     }
+
     @Test
     public void testcase1_getTweets() {
         MessageRequest req = null;
@@ -66,6 +67,7 @@ public class RetrieveTweetsTest {
         Assert.assertEquals(expectedTweet.getStatus(), actualTweet.getStatus());
         Assert.assertEquals(expectedTweet.getStatus(), actualTweet.getStatus());
     }
+
     @Test
     public void testcase_noTweetsFound() {
         when(tweetPost.fetchTweets()).thenReturn(Response.ok().build());

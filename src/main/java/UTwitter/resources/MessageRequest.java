@@ -6,7 +6,8 @@ public class MessageRequest {
 
     public MessageRequest() {
     }
-    public MessageRequest(String msg){
+
+    public MessageRequest(String msg) {
         this.msg = msg;
     }
 
