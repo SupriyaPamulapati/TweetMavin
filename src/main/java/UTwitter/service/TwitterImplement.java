@@ -1,6 +1,8 @@
 package UTwitter.service;
 
 import UTwitter.RestConfig;
+import model.Pojo_TwitterResponse;
+import model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import twitter4j.Status;
@@ -18,6 +20,8 @@ public class TwitterImplement {
     ConfigurationBuilder configurationBuilder;
     TwitterFactory twitterFactory;
     Twitter twitter;
+    User user;
+    Pojo_TwitterResponse pojo_twitterResponse;
     Logger log = LoggerFactory.getLogger(TwitterImplement.class);
 
     public TwitterImplement() {
@@ -25,6 +29,8 @@ public class TwitterImplement {
         configurationBuilder = restConfig.configurationBuilder();
         twitterFactory = new TwitterFactory(configurationBuilder.build());
         twitter = twitterFactory.getInstance();
+        user = new User();
+        pojo_twitterResponse = new Pojo_TwitterResponse(user);
     }
 
     public TwitterImplement(TwitterFactory twitterFactory) {
@@ -34,27 +40,26 @@ public class TwitterImplement {
 
 
     public Status sendTweet(String args) throws TwitterException {
-        Logger logger = LoggerFactory.getLogger(TwitterImplement.class);
+        Logger log = LoggerFactory.getLogger(TwitterImplement.class);
         Status status;
         status = twitter.updateStatus(args);
         return status;
     }
 
-    public ArrayList<String> GetTweets() {
-        ArrayList<String> arrayList = new ArrayList<>();
+    public List<String> GetTweets() {
+        List<String> twitterHandle = null;
         try {
             List<Status> statuses = twitter.getHomeTimeline();
+            user.setName("User Name :"+statuses.get(0).getUser().getName());
+            user.setProfileURL("profile URL"+statuses.get(0).getUser().getProfileImageURL());
             for (int i = 0; i < statuses.size(); i++) {
                 Status status = statuses.get(i);
-                arrayList.add(status.getText());
+                user.setUserHandle("@"+status.getUser().getScreenName()+"  "+status.getText()+"  @Date-"+status.getCreatedAt()+"  "+status.getURLEntities());
             }
+            twitterHandle=pojo_twitterResponse.getTwitterTimelineList();
         } catch (TwitterException e) {
             log.error("error in retrieving tweets ");
-            if (arrayList.isEmpty()) {
-                log.error("no Tweets, Empty timeline");
-                arrayList.add("No Tweets found");
-            }
         }
-        return arrayList;
+        return twitterHandle;
     }
 }
