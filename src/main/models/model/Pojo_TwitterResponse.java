@@ -6,7 +6,7 @@ public class Pojo_TwitterResponse {
     String createdAt;
     public Pojo_TwitterResponse(String message, String twitterHandle, String name, String profileImageUrl, String createdAt) {
         this.message = message;
-        this.user = new User(twitterHandle,name,profileImageUrl);
+        this.user = new User(name,twitterHandle,profileImageUrl);
         this.createdAt = createdAt;
     }
 
