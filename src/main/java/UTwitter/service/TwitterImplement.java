@@ -11,6 +11,10 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -28,8 +32,6 @@ public class TwitterImplement {
         configurationBuilder = restConfig.configurationBuilder();
         twitterFactory = new TwitterFactory(configurationBuilder.build());
         twitter = twitterFactory.getInstance();
-        user = new User();
-        pojo_twitterResponse = new Pojo_TwitterResponse(user);
     }
 
     public TwitterImplement(TwitterFactory twitterFactory) {
@@ -45,20 +47,32 @@ public class TwitterImplement {
         return status;
     }
 
-    public List<String> GetTweets() {
-        List<String> twitterHandle = null;
+    public ArrayList<Pojo_TwitterResponse> GetTweets() {
+        String twitterHandle;
+        String name;
+        String message = null;
+        String profileImageUrl = null;
+        Date createdAt = null;
+
+        ArrayList<Pojo_TwitterResponse> arrayList = new ArrayList<>();
+        List<Status> statuses = null;
         try {
-            List<Status> statuses = twitter.getHomeTimeline();
-            user.setName("User Name :" + statuses.get(0).getUser().getName());
-            user.setProfileURL("profile URL" + statuses.get(0).getUser().getProfileImageURL());
+            statuses = twitter.getHomeTimeline();
             for (int i = 0; i < statuses.size(); i++) {
                 Status status = statuses.get(i);
-                user.setUserHandle("@" + status.getUser().getScreenName() + "  " + status.getText() + "  @Date-" + status.getCreatedAt() + "  " + status.getURLEntities());
+                profileImageUrl = status.getUser().getProfileImageURL();
+                 name = status.getUser().getName();
+                 message = status.getText();
+                 createdAt =status.getCreatedAt();
+                 Format format = new SimpleDateFormat("dd-mm-yyy HH:mm:ss");
+                 String date = format.format(createdAt);
+                 twitterHandle = status.getUser().getScreenName();
+                 pojo_twitterResponse = new Pojo_TwitterResponse(message,name,twitterHandle,profileImageUrl,date);
+                arrayList.add(pojo_twitterResponse);
             }
-            twitterHandle = pojo_twitterResponse.getTwitterTimelineList();
         } catch (TwitterException e) {
             log.error("error in retrieving tweets ");
         }
-        return twitterHandle;
+        return arrayList;
     }
 }

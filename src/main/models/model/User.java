@@ -3,19 +3,22 @@ package model;
 import java.util.ArrayList;
 
 public class User {
-    String message;
+    String twitterHandle;
     String name;
-    String profileURL;
-    ArrayList<String> userHandle = new ArrayList<>();
-    String userHandles;
+    String profileImageUrl;
 
-    public User() {
-
+    public User(String twitterHandle, String name, String profileImageUrl) {
+        this.twitterHandle = twitterHandle;
+        this.name = name;
+        this.profileImageUrl = profileImageUrl;
     }
 
-    public String getMessage() {
+    public String getTwitterHandle() {
+        return twitterHandle;
+    }
 
-        return message;
+    public void setTwitterHandle(String twitterHandle) {
+        this.twitterHandle = twitterHandle;
     }
 
     public String getName() {
@@ -26,20 +29,12 @@ public class User {
         this.name = name;
     }
 
-    public String getProfileURL() {
-        return profileURL;
+    public String getProfileImageUrl() {
+        return profileImageUrl;
     }
 
-    public void setProfileURL(String profileImageUrl) {
-        this.profileURL = profileURL;
-    }
-
-    public ArrayList<String> getUserHandle() {
-        return userHandle;
-    }
-
-    public void setUserHandle(String userHandles) {
-        this.userHandles = userHandles;
-        userHandle.add(userHandles);
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
     }
 }
+

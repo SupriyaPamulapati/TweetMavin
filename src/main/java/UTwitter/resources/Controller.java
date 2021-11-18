@@ -1,6 +1,7 @@
 package UTwitter.resources;
 
 import UTwitter.service.TwitterImplement;
+import model.Pojo_TwitterResponse;
 import org.eclipse.jetty.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,8 +11,8 @@ import twitter4j.TwitterException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 
 @Produces(MediaType.APPLICATION_JSON)
@@ -38,13 +39,7 @@ public class Controller {
     @GET
     @Path("getTweets")
     public Response fetchTweets() {
-        List<String> msg = null;
-        try {
-            msg = twitterImplement.GetTweets();
-        } catch (Exception e) {
-            logger.error("noo Tweet Found");
-        }
-        return Response.ok(msg).build();
+      return Response.ok(twitterImplement.GetTweets()).build();
     }
 
     @POST

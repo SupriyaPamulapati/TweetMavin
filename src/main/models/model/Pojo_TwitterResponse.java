@@ -1,24 +1,40 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Pojo_TwitterResponse {
+    String message;
     User user;
-    ArrayList<String> userHandles = new ArrayList<>();
-    List<String> twitterTimelineList = new ArrayList<>();
+    String createdAt;
+    public Pojo_TwitterResponse(String message, String twitterHandle, String name, String profileImageUrl, String createdAt) {
+        this.message = message;
+        this.user = new User(twitterHandle,name,profileImageUrl);
+        this.createdAt = createdAt;
+    }
 
-    public Pojo_TwitterResponse(User user) {
+
+    public void setUser(User user) {
         this.user = user;
     }
 
-    public List<String> getTwitterTimelineList() {
-        userHandles = user.getUserHandle();
-        twitterTimelineList.add(user.getName());
-        for (int i = 0; i < userHandles.size(); i++) {
-            twitterTimelineList.add(userHandles.get(i));
-        }
-        twitterTimelineList.add(user.getProfileURL());
-        return twitterTimelineList;
+    public User getUser() {
+        return user;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getCreated() {
+        return createdAt;
+    }
+
+    public String setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+        return createdAt;
     }
 }
+
+
