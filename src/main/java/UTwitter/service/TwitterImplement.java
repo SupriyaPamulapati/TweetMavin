@@ -1,6 +1,7 @@
 package UTwitter.service;
 
 import UTwitter.RestConfig;
+import model.TwitterResponseModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import twitter4j.Status;
@@ -9,7 +10,10 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -18,6 +22,7 @@ public class TwitterImplement {
     ConfigurationBuilder configurationBuilder;
     TwitterFactory twitterFactory;
     Twitter twitter;
+    TwitterResponseModel _twitterResponseModel;
     Logger log = LoggerFactory.getLogger(TwitterImplement.class);
 
     public TwitterImplement() {
@@ -34,26 +39,36 @@ public class TwitterImplement {
 
 
     public Status sendTweet(String args) throws TwitterException {
-        Logger logger = LoggerFactory.getLogger(TwitterImplement.class);
+        Logger log = LoggerFactory.getLogger(TwitterImplement.class);
         Status status;
         status = twitter.updateStatus(args);
         return status;
     }
 
-    public ArrayList<String> GetTweets() {
-        ArrayList<String> arrayList = new ArrayList<>();
+    public ArrayList<TwitterResponseModel> getTweets() {
+        ArrayList<TwitterResponseModel> arrayList = new ArrayList<>();
+        List<Status> statuses = null;
         try {
-            List<Status> statuses = twitter.getHomeTimeline();
+            statuses = twitter.getHomeTimeline();
             for (int i = 0; i < statuses.size(); i++) {
+                String twitterHandle;
+                String name;
+                String message ;
+                String profileImageUrl ;
+                Date createdAt ;
                 Status status = statuses.get(i);
-                arrayList.add(status.getText());
+                profileImageUrl = status.getUser().getProfileImageURL();
+                 name = status.getUser().getName();
+                 message = status.getText();
+                 createdAt =status.getCreatedAt();
+                 Format format = new SimpleDateFormat("dd-mm-yyy HH:mm:ss");
+                 String date = format.format(createdAt);
+                 twitterHandle = status.getUser().getScreenName();
+                 _twitterResponseModel = new TwitterResponseModel(message,name,twitterHandle,profileImageUrl,date);
+                arrayList.add(_twitterResponseModel);
             }
         } catch (TwitterException e) {
             log.error("error in retrieving tweets ");
-            if (arrayList.isEmpty()) {
-                log.error("no Tweets, Empty timeline");
-                arrayList.add("No Tweets found");
-            }
         }
         return arrayList;
     }
