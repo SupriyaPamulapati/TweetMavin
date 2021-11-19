@@ -1,7 +1,6 @@
 package UTwitter.resources;
 
 import UTwitter.service.TwitterImplement;
-import model.Pojo_TwitterResponse;
 import org.eclipse.jetty.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +10,6 @@ import twitter4j.TwitterException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -39,7 +37,7 @@ public class Controller {
     @GET
     @Path("getTweets")
     public Response fetchTweets() {
-      return Response.ok(twitterImplement.GetTweets()).build();
+      return Response.ok(twitterImplement.getTweets()).build();
     }
 
     @POST

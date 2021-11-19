@@ -3,7 +3,7 @@ package com.test;
 import UTwitter.resources.Controller;
 import UTwitter.resources.MessageRequest;
 import UTwitter.service.TwitterImplement;
-import model.Pojo_TwitterResponse;
+import model.TwitterResponseModel;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -93,7 +93,7 @@ public class RetrieveTweetsTest_implement {
         when(s3.getText()).thenReturn("Tweet3");
         when(twitter.getHomeTimeline()).thenReturn(responseList);
         List<String> expected = Arrays.asList("Tweet1", "Tweet2", "Tweet3");
-        List<Pojo_TwitterResponse> actual = twitterImplement.GetTweets();
+        List<TwitterResponseModel> actual = twitterImplement.getTweets();
         Assert.assertEquals(expected, actual);
     }
 
@@ -102,7 +102,7 @@ public class RetrieveTweetsTest_implement {
         ResponseList<Status> responseList = mock(ResponseList.class);
         when(responseList.size()).thenReturn(0);
         when(twitter.getHomeTimeline()).thenReturn(responseList);
-        List<Pojo_TwitterResponse> actual = twitterImplement.GetTweets();
+        List<TwitterResponseModel> actual = twitterImplement.getTweets();
         Assert.assertEquals(Arrays.asList(), actual);
     }
 

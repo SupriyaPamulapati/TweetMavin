@@ -12,22 +12,26 @@ public class User {
         this.name = name;
         this.profileImageUrl = profileImageUrl;
     }
+   public User()
+    {
 
-    public String getTwitterHandle() {
+    }
+
+   public String getTwitterHandle() {
         return twitterHandle;
     }
 
-    public void setTwitterHandle(String twitterHandle) {
+   public void setTwitterHandle(String twitterHandle) {
         this.twitterHandle = twitterHandle;
-    }
+   }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+       return name;
+   }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+   public void setName(String name) {
+    this.name = name;
+   }
 
     public String getProfileImageUrl() {
         return profileImageUrl;

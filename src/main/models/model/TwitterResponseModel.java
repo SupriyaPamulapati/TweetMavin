@@ -1,10 +1,10 @@
 package model;
 
-public class Pojo_TwitterResponse {
+public class TwitterResponseModel {
     String message;
     User user;
     String createdAt;
-    public Pojo_TwitterResponse(String message, String twitterHandle, String name, String profileImageUrl, String createdAt) {
+    public TwitterResponseModel(String message, String twitterHandle, String name, String profileImageUrl, String createdAt) {
         this.message = message;
         this.user = new User(name,twitterHandle,profileImageUrl);
         this.createdAt = createdAt;

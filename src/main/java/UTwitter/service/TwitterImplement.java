@@ -1,8 +1,7 @@
 package UTwitter.service;
 
 import UTwitter.RestConfig;
-import model.Pojo_TwitterResponse;
-import model.User;
+import model.TwitterResponseModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import twitter4j.Status;
@@ -23,8 +22,7 @@ public class TwitterImplement {
     ConfigurationBuilder configurationBuilder;
     TwitterFactory twitterFactory;
     Twitter twitter;
-    User user;
-    Pojo_TwitterResponse pojo_twitterResponse;
+    TwitterResponseModel _twitterResponseModel;
     Logger log = LoggerFactory.getLogger(TwitterImplement.class);
 
     public TwitterImplement() {
@@ -47,18 +45,17 @@ public class TwitterImplement {
         return status;
     }
 
-    public ArrayList<Pojo_TwitterResponse> GetTweets() {
-        String twitterHandle;
-        String name;
-        String message = null;
-        String profileImageUrl = null;
-        Date createdAt = null;
-
-        ArrayList<Pojo_TwitterResponse> arrayList = new ArrayList<>();
+    public ArrayList<TwitterResponseModel> getTweets() {
+        ArrayList<TwitterResponseModel> arrayList = new ArrayList<>();
         List<Status> statuses = null;
         try {
             statuses = twitter.getHomeTimeline();
             for (int i = 0; i < statuses.size(); i++) {
+                String twitterHandle;
+                String name;
+                String message ;
+                String profileImageUrl ;
+                Date createdAt ;
                 Status status = statuses.get(i);
                 profileImageUrl = status.getUser().getProfileImageURL();
                  name = status.getUser().getName();
@@ -67,8 +64,8 @@ public class TwitterImplement {
                  Format format = new SimpleDateFormat("dd-mm-yyy HH:mm:ss");
                  String date = format.format(createdAt);
                  twitterHandle = status.getUser().getScreenName();
-                 pojo_twitterResponse = new Pojo_TwitterResponse(message,name,twitterHandle,profileImageUrl,date);
-                arrayList.add(pojo_twitterResponse);
+                 _twitterResponseModel = new TwitterResponseModel(message,name,twitterHandle,profileImageUrl,date);
+                arrayList.add(_twitterResponseModel);
             }
         } catch (TwitterException e) {
             log.error("error in retrieving tweets ");
