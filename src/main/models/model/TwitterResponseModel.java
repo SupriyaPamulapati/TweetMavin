@@ -10,6 +10,10 @@ public class TwitterResponseModel {
         this.createdAt = createdAt;
     }
 
+ public TwitterResponseModel()
+ {
+
+ }
 
     public void setUser(User user) {
         this.user = user;
@@ -19,22 +23,21 @@ public class TwitterResponseModel {
         return user;
     }
 
+    public void setMessage(String message) {
+        this.message = message;
+    }
     public String getMessage() {
         return message;
     }
-
-    public void setMessage(String message) {
-        this.message = message;
+    public String setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+        return createdAt;
     }
 
     public String getCreated() {
         return createdAt;
     }
 
-    public String setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-        return createdAt;
-    }
 }
 
 

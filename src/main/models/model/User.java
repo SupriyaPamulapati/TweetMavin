@@ -1,6 +1,5 @@
 package model;
 
-import java.util.ArrayList;
 
 public class User {
     String twitterHandle;
@@ -11,10 +10,6 @@ public class User {
         this.twitterHandle = twitterHandle;
         this.name = name;
         this.profileImageUrl = profileImageUrl;
-    }
-   public User()
-    {
-
     }
 
    public String getTwitterHandle() {

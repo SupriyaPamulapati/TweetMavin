@@ -1,6 +1,7 @@
 package UTwitter.resources;
 
 import UTwitter.service.TwitterImplement;
+import model.TwitterResponseModel;
 import org.eclipse.jetty.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,7 @@ import twitter4j.TwitterException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 import java.util.Date;
 
 
@@ -20,11 +22,14 @@ public class Controller {
     TwitterImplement twitterImplement;
 
 
-    public Controller(TwitterImplement twitterImplement) {
+
+    public Controller(TwitterImplement twitterImplement)
+    {
         this.twitterImplement = twitterImplement;
     }
 
-    public Controller() {
+    public Controller()
+    {
         twitterImplement = new TwitterImplement();
     }
 
@@ -35,10 +40,20 @@ public class Controller {
     }
 
     @GET
-    @Path("getTweets")
+    @Path("/getTweets")
     public Response fetchTweets() {
       return Response.ok(twitterImplement.getTweets()).build();
     }
+
+    @GET
+    @Path("/filteredTweets")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response filteredTweets(@QueryParam("searchKey") String searchKey) throws TwitterException{
+        List<TwitterResponseModel>  response ;
+            response = twitterImplement.getFilteredTweets(searchKey) ;
+            return Response.ok(response).build();
+    }
+
 
     @POST
     @Path("/postTweets")

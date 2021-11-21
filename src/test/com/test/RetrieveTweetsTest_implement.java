@@ -27,6 +27,7 @@ public class RetrieveTweetsTest_implement {
     TwitterFactory twitterFactory;
     TwitterImplement twitterImplement;
     Twitter twitter;
+    TwitterResponseModel twitterResponseModel;
 
 
     @Before
@@ -35,7 +36,7 @@ public class RetrieveTweetsTest_implement {
         twitter = mock(Twitter.class);
         twitterFactory = mock(TwitterFactory.class);
         when(twitterFactory.getInstance()).thenReturn(twitter);
-        twitterImplement = new TwitterImplement(twitterFactory);
+        twitterImplement = new TwitterImplement(twitterFactory,twitterResponseModel);
     }
 
     @Test

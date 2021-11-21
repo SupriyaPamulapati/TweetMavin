@@ -4,6 +4,7 @@ import UTwitter.resources.Controller;
 import UTwitter.resources.MessageRequest;
 import UTwitter.service.PostTweet;
 import UTwitter.service.TwitterImplement;
+import model.TwitterResponseModel;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,6 +32,7 @@ public class PostTweetTest_implement {
     TwitterImplement twitterImplement;
     MessageRequest messageRequest;
     Twitter twitter;
+    TwitterResponseModel twitterResponseModel;
     Logger log = LoggerFactory.getLogger(PostTweet.class);
 
     @Before
@@ -39,7 +41,7 @@ public class PostTweetTest_implement {
         twitter = mock(Twitter.class);
         twitterFactory = mock(TwitterFactory.class);
         when(twitterFactory.getInstance()).thenReturn(twitter);
-        twitterImplement = new TwitterImplement(twitterFactory);
+        twitterImplement = new TwitterImplement(twitterFactory,twitterResponseModel);
         messageRequest = new MessageRequest();
         controller = new Controller();
 
