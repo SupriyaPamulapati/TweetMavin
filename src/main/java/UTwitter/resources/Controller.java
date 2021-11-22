@@ -11,8 +11,8 @@ import twitter4j.TwitterException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
 import java.util.Date;
+import java.util.List;
 
 
 @Produces(MediaType.APPLICATION_JSON)

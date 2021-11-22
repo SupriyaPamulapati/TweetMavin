@@ -41,7 +41,7 @@ public class PostTweetTest_implement {
         twitter = mock(Twitter.class);
         twitterFactory = mock(TwitterFactory.class);
         when(twitterFactory.getInstance()).thenReturn(twitter);
-        twitterImplement = new TwitterImplement(twitterFactory,twitterResponseModel);
+        twitterImplement = new TwitterImplement(twitterFactory, twitterResponseModel);
         messageRequest = new MessageRequest();
         controller = new Controller();
 

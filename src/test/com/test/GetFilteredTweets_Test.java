@@ -30,10 +30,10 @@ public class GetFilteredTweets_Test {
     Twitter twitter;
     TwitterResponseModel twitterResponseModel;
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    String twitterHandle="@masum";
-    String name="Raushan";
-    String message="tweet1";
-    String profileImageUrl="www.RajProfile.com";
+    String twitterHandle = "@masum";
+    String name = "Raushan";
+    String message = "tweet1";
+    String profileImageUrl = "www.RajProfile.com";
     Date created;
     String date;
 
@@ -55,12 +55,13 @@ public class GetFilteredTweets_Test {
         str.add("good and easy life");
         str.add("good to b good");
         when(tweetPost.filteredTweets("good")).thenReturn(Response.ok(str).build());
-        String[] s= new String[]{"good start if day", "A. good day", "good and easy life", "good to b good"};
+        String[] s = new String[]{"good start if day", "A. good day", "good and easy life", "good to b good"};
         Response expectedTweet = Response.ok(s).build();
         Response actualTweet = tweetPost.filteredTweets("good");
         Assert.assertEquals(expectedTweet.getStatus(), actualTweet.getStatus());
         Assert.assertEquals(expectedTweet.getStatus(), actualTweet.getStatus());
     }
+
     @Test
     public void noTweetMatch_Test() throws TwitterException {
         ResponseList<Status> responseList = mock(ResponseList.class);
@@ -69,12 +70,13 @@ public class GetFilteredTweets_Test {
         List<TwitterResponseModel> actual = twitterImplement.getFilteredTweets("forest");
         Assert.assertEquals(Arrays.asList(), actual);
     }
+
     @Test
-    public void testCase_fetchFilterTweet_successCase() throws TwitterException{
+    public void testCase_fetchFilterTweet_successCase() throws TwitterException {
         Status s1 = mock(Status.class);
-        User user=mock(User.class);
+        User user = mock(User.class);
         ResponseList<Status> responseList = mock(ResponseList.class);
-        List<TwitterResponse> twitListExpected=mock(ArrayList.class);
+        List<TwitterResponse> twitListExpected = mock(ArrayList.class);
         when(responseList.size()).thenReturn(1);
         when(responseList.get(0)).thenReturn(s1);
         when(s1.getUser()).thenReturn(user);
@@ -86,7 +88,7 @@ public class GetFilteredTweets_Test {
         when(twitter.getHomeTimeline()).thenReturn(responseList);
         twitListExpected.add(null);
         List<TwitterResponseModel> actualListExpected = twitterImplement.getFilteredTweets("good");
-        Assert.assertEquals(twitListExpected,actualListExpected);
+        Assert.assertEquals(twitListExpected, actualListExpected);
     }
 
 }
