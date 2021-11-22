@@ -22,14 +22,11 @@ public class Controller {
     TwitterImplement twitterImplement;
 
 
-
-    public Controller(TwitterImplement twitterImplement)
-    {
+    public Controller(TwitterImplement twitterImplement) {
         this.twitterImplement = twitterImplement;
     }
 
-    public Controller()
-    {
+    public Controller() {
         twitterImplement = new TwitterImplement();
     }
 
@@ -42,18 +39,17 @@ public class Controller {
     @GET
     @Path("/getTweets")
     public Response fetchTweets() {
-      return Response.ok(twitterImplement.getTweets()).build();
+        return Response.ok(twitterImplement.getTweets()).build();
     }
 
     @GET
     @Path("/filteredTweets")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response filteredTweets(@QueryParam("searchKey") String searchKey) throws TwitterException{
-        List<TwitterResponseModel>  response ;
-            response = twitterImplement.getFilteredTweets(searchKey) ;
-            return Response.ok(response).build();
+    public Response filteredTweets(@QueryParam("searchKey") String searchKey) throws TwitterException {
+        List<TwitterResponseModel> response;
+        response = twitterImplement.getFilteredTweets(searchKey);
+        return Response.ok(response).build();
     }
-
 
     @POST
     @Path("/postTweets")

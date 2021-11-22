@@ -13,10 +13,11 @@ import org.mockito.junit.MockitoJUnitRunner;
 import twitter4j.*;
 
 import javax.ws.rs.core.Response;
-import java.sql.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import static org.mockito.Mockito.mock;
@@ -31,8 +32,20 @@ public class GetFilteredTweets_Test {
     TwitterResponseModel twitterResponseModel;
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     String message = "Good";
+    String twitterHandle = "@SupriyaChowdar9";
+    String name = "Supriya Chowdary";
+    String profileImageUrl = "www.testcase.com";
     Date created;
+    String date;
 
+    {
+        try {
+            created = dateFormat.parse("16-11-2021 01:03:00");
+        } catch (ParseException E) {
+            E.printStackTrace();
+        }
+        date = dateFormat.format(created);
+    }
 
     @Before
     public void setUp() {
@@ -43,6 +56,7 @@ public class GetFilteredTweets_Test {
         twitterImplement = new TwitterImplement(twitterFactory, twitterResponseModel);
     }
 
+   //test case to check success case of fetching the tweets based on search key word
     @Test
     public void getFilteredTweets_SuccessCase() throws TwitterException {
         MessageRequest req = null;
@@ -52,11 +66,27 @@ public class GetFilteredTweets_Test {
         str.add("good and easy life");
         str.add("good to b good");
         when(tweetPost.filteredTweets("good")).thenReturn(Response.ok(str).build());
-        String[] s = new String[]{"good start if day", "A. good day", "good and easy life", "good to b good"};
-        Response expectedTweet = Response.ok(s).build();
+        Response expectedTweet = Response.ok(str).build();
         Response actualTweet = tweetPost.filteredTweets("good");
-        Assert.assertEquals(expectedTweet.getStatus(), actualTweet.getStatus());
-        Assert.assertEquals(expectedTweet.getStatus(), actualTweet.getStatus());
+        Assert.assertEquals(expectedTweet.getEntity(), actualTweet.getEntity());
+    }
+   //test case to check the case-sensitivity of search key word
+    @Test
+    public void caseSensitiveTest() throws TwitterException {
+        MessageRequest req = null;
+        ArrayList<String> str = new ArrayList<String>();
+        str.add("good start if day");
+        str.add("A. good day");
+        str.add("good and easy life");
+        str.add("good to b good");
+        when(tweetPost.filteredTweets("good")).thenReturn(Response.ok(str).build());
+        Response expectedTweet = Response.ok(str).build();
+        String s = "good";
+        Response actualTweet = null;
+        if (s == "good" || s == "Good") {
+            actualTweet = tweetPost.filteredTweets(s);
+        }
+        Assert.assertEquals(expectedTweet.getEntity(), actualTweet.getEntity());
     }
 
     @Test
@@ -67,27 +97,25 @@ public class GetFilteredTweets_Test {
         List<TwitterResponseModel> actual = twitterImplement.getFilteredTweets("forest");
         Assert.assertEquals(Arrays.asList(), actual);
     }
-
     @Test
-    public void testCase_fetchFilterTweet_successCase() throws TwitterException {
-        Status s1 = mock(Status.class);
-        User user = mock(User.class);
+    public void fetchTweet() throws TwitterException {
+        ArrayList<TwitterResponseModel> expectedList = mock(ArrayList.class);
         ResponseList<Status> responseList = mock(ResponseList.class);
-        List<TwitterResponse> twitListExpected = mock(ArrayList.class);
+        User user = mock(User.class);
+        Status s1 = mock(Status.class);
         when(responseList.size()).thenReturn(1);
         when(responseList.get(0)).thenReturn(s1);
         when(s1.getUser()).thenReturn(user);
-        when(s1.getUser().getProfileImageURL()).thenReturn("http://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png");
-        when(s1.getUser().getName()).thenReturn("Supriya Chowdary");
-        when(s1.getUser().getScreenName()).thenReturn("SupriyaChowdar9");
+        when(s1.getUser().getProfileImageURL()).thenReturn(profileImageUrl);
+        when(s1.getUser().getName()).thenReturn(name);
+        when(s1.getUser().getScreenName()).thenReturn(twitterHandle);
         when(s1.getText()).thenReturn(message);
         when(s1.getCreatedAt()).thenReturn(created);
         when(twitter.getHomeTimeline()).thenReturn(responseList);
-        twitListExpected.add(null);
-        List<TwitterResponseModel> actualListExpected = twitterImplement.getFilteredTweets("good");
-        Assert.assertEquals(twitListExpected, actualListExpected);
+        expectedList.add(twitterResponseModel);
+        ArrayList<TwitterResponseModel> actualList = (ArrayList<TwitterResponseModel>) twitterImplement.getFilteredTweets("good and easy life");
+        Assert.assertEquals(expectedList, actualList);
     }
-
 }
 
 

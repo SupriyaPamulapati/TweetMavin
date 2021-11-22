@@ -49,10 +49,10 @@ public class TwitterImplement {
 
     public ArrayList<TwitterResponseModel> getTweets() {
         ArrayList<TwitterResponseModel> arrayList = new ArrayList<>();
-        List<Status> statuses = null;
         try {
-            statuses = twitter.getHomeTimeline();
-            for (Status status : statuses) {
+            List<Status> statuses = twitter.getHomeTimeline();
+            for (int i = 0; i < statuses.size(); i++) {
+                Status status = statuses.get(i);
                 String profileImageUrl = status.getUser().getProfileImageURL();
                 String name = status.getUser().getName();
                 String message = status.getText();
@@ -71,27 +71,14 @@ public class TwitterImplement {
 
 
     public List<TwitterResponseModel> getFilteredTweets(String tweets) {
-        ArrayList<TwitterResponseModel> arrayList = new ArrayList<>();
+        ArrayList<TwitterResponseModel> tweetList = new ArrayList<>();
         List<TwitterResponseModel> filteredTweets;
-        try {
-           List<Status> statuses = twitter.getHomeTimeline();
-            for (Status status : statuses) {
-                String profileImageUrl = status.getUser().getProfileImageURL();
-                String name = status.getUser().getName();
-                String message = status.getText();
-                Date createdAt = status.getCreatedAt();
-                Format format = new SimpleDateFormat("dd-mm-yyy HH:mm:ss");
-                String date = format.format(createdAt);
-                String twitterHandle = status.getUser().getScreenName();
-                twitterResponseModel = new TwitterResponseModel(message, name, twitterHandle, profileImageUrl, date);
-                arrayList.add(twitterResponseModel);
-            }
-        } catch (TwitterException e) {
-            log.error("error in retrieving tweets ");
-        }
+         tweetList= getTweets();
         int len = tweets.length();
         CharSequence charSequence = tweets.subSequence(0, len);
-        filteredTweets = arrayList.stream().filter(t -> t.getMessage().contains(charSequence)).collect(Collectors.toList());
+        filteredTweets = tweetList.stream().filter(t -> t.getMessage().contains(charSequence)).collect(Collectors.toList());
         return filteredTweets;
     }
+
+
 }

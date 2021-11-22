@@ -67,7 +67,14 @@ public class RetrieveTweetsTest_implement {
         Response expectedTweet = Response.ok(arrayList).build();
         Response actualTweet = tweetPost.fetchTweets();
         Assert.assertEquals(expectedTweet.getStatus(), actualTweet.getStatus());
-        Assert.assertEquals(expectedTweet.getStatus(), actualTweet.getStatus());
+    }
+    @Test
+    public void noTweetMatch_Test() throws TwitterException {
+        ResponseList<Status> responseList = mock(ResponseList.class);
+        when(responseList.size()).thenReturn(0);
+        when(twitter.getHomeTimeline()).thenReturn(responseList);
+        List<TwitterResponseModel> actual = twitterImplement.getFilteredTweets("forest");
+        Assert.assertEquals(Arrays.asList(), actual);
     }
 
     @Test
