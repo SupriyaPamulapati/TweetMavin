@@ -7,8 +7,6 @@ public class PostTweet {
         this.twitterImplement = twitterImplement;
     }
 
-    public PostTweet() {
-    }
 }
 
 

@@ -11,6 +11,4 @@ public class RetrieveTweets {
         this.twitterImplement = twitterImplement;
     }
 
-    public RetrieveTweets() {
-    }
 }

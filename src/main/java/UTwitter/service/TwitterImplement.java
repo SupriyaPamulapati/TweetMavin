@@ -40,7 +40,6 @@ public class TwitterImplement {
         this.twitterResponseModel = twitterResponseModel;
     }
 
-
     public Status sendTweet(String args) throws TwitterException {
         Logger log = LoggerFactory.getLogger(TwitterImplement.class);
         Status status;
@@ -74,7 +73,6 @@ public class TwitterImplement {
     public List<TwitterResponseModel> getFilteredTweets(String tweets) {
         ArrayList<TwitterResponseModel> arrayList = new ArrayList<>();
         List<TwitterResponseModel> filteredTweets;
-
         try {
            List<Status> statuses = twitter.getHomeTimeline();
             for (Status status : statuses) {

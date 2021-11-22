@@ -30,12 +30,9 @@ public class GetFilteredTweets_Test {
     Twitter twitter;
     TwitterResponseModel twitterResponseModel;
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    String twitterHandle = "@masum";
-    String name = "Raushan";
-    String message = "tweet1";
-    String profileImageUrl = "www.RajProfile.com";
+    String message = "Good";
     Date created;
-    String date;
+
 
     @Before
     public void setUp() {
@@ -80,9 +77,9 @@ public class GetFilteredTweets_Test {
         when(responseList.size()).thenReturn(1);
         when(responseList.get(0)).thenReturn(s1);
         when(s1.getUser()).thenReturn(user);
-        when(s1.getUser().getProfileImageURL()).thenReturn("SupriyaChowdar9");
+        when(s1.getUser().getProfileImageURL()).thenReturn("http://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png");
         when(s1.getUser().getName()).thenReturn("Supriya Chowdary");
-        when(s1.getUser().getScreenName()).thenReturn(twitterHandle);
+        when(s1.getUser().getScreenName()).thenReturn("SupriyaChowdar9");
         when(s1.getText()).thenReturn(message);
         when(s1.getCreatedAt()).thenReturn(created);
         when(twitter.getHomeTimeline()).thenReturn(responseList);
