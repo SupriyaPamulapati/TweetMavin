@@ -71,14 +71,16 @@ public class TwitterImplement {
 
 
     public List<TwitterResponseModel> getFilteredTweets(String tweets) {
-        ArrayList<TwitterResponseModel> tweetList;
-        List<TwitterResponseModel> filteredTweets;
-         tweetList= getTweets();
+        ArrayList<TwitterResponseModel> tweetList= getTweets();
         int len = tweets.length();
         CharSequence charSequence = tweets.subSequence(0, len);
-        filteredTweets = tweetList.stream().filter(t -> t.getMessage().contains(charSequence)).collect(Collectors.toList());
+        List<TwitterResponseModel> filteredTweets = tweetList.stream().filter(t -> t.getMessage().contains(charSequence)).collect(Collectors.toList());
         return filteredTweets;
     }
 
+    public List<TwitterResponseModel> getTweetsPage(int start, int size) throws TwitterException {
+        ArrayList<TwitterResponseModel> tweetPage = getTweets();
+        return tweetPage.subList(start, start + size);
+    }
 
 }
