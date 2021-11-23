@@ -1,6 +1,6 @@
-package UTwitter.service;
+package com.service;
 
-import UTwitter.RestConfig;
+import com.RestConfig;
 import model.TwitterResponseModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

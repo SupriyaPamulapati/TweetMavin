@@ -1,9 +1,9 @@
 package com.test;
 
-import UTwitter.resources.Controller;
-import UTwitter.resources.MessageRequest;
-import UTwitter.service.PostTweet;
-import UTwitter.service.TwitterImplement;
+import com.resources.Controller;
+import com.resources.MessageRequest;
+import com.service.PostTweet;
+import com.service.TwitterImplement;
 import model.TwitterResponseModel;
 import org.junit.Assert;
 import org.junit.Before;
@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 
 
 @RunWith(MockitoJUnitRunner.class)
-public class PostTweetTest_implement {
+public class PostTweetTest {
     Controller controller;
     TwitterFactory twitterFactory;
     Status status;

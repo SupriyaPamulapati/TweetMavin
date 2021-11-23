@@ -1,6 +1,6 @@
-package UTwitter.resources;
+package com.resources;
 
-import UTwitter.service.TwitterImplement;
+import com.service.TwitterImplement;
 import model.TwitterResponseModel;
 import org.eclipse.jetty.util.StringUtil;
 import org.slf4j.Logger;

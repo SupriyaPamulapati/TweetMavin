@@ -1,29 +1,29 @@
-package UTwitter.tweet;
+package com.tweet;
 
-import UTwitter.RestConfig;
-import UTwitter.resources.Controller;
+import com.RestConfig;
+import com.resources.Controller;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Environment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public class MyTweet extends Application<RestConfig> {
-    private static final Logger logger = LoggerFactory.getLogger(MyTweet.class);
+public class TwitterRunner extends Application<RestConfig> {
+    private static final Logger logger = LoggerFactory.getLogger(TwitterRunner.class);
     RestConfig restConfig;
     Environment environment;
 
-    public MyTweet(RestConfig restConfig, Environment environment) {
+    public TwitterRunner(RestConfig restConfig, Environment environment) {
         this.restConfig = restConfig;
         this.environment = environment;
     }
 
-    public MyTweet() {
+    public TwitterRunner() {
     }
 
     public static void main(String[] args) throws Exception {
         logger.info("main method activated");
-        new MyTweet().run(args);
+        new TwitterRunner().run(args);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package UTwitter;
+package com;
 
 import io.dropwizard.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
