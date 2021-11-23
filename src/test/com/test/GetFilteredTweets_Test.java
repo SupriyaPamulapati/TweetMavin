@@ -89,8 +89,9 @@ public class GetFilteredTweets_Test {
         Assert.assertEquals(expectedTweet.getEntity(), actualTweet.getEntity());
     }
 
+   // testcase to check with a search key which is not in timeline
     @Test
-    public void noTweetMatch_Test() throws TwitterException {
+    public void noTweetMatchTest() throws TwitterException {
         ResponseList<Status> responseList = mock(ResponseList.class);
         when(responseList.size()).thenReturn(0);
         when(twitter.getHomeTimeline()).thenReturn(responseList);
@@ -98,7 +99,7 @@ public class GetFilteredTweets_Test {
         Assert.assertEquals(Arrays.asList(), actual);
     }
     @Test
-    public void fetchTweet() throws TwitterException {
+    public void getTweetTest() throws TwitterException {
         ArrayList<TwitterResponseModel> expectedList = mock(ArrayList.class);
         ResponseList<Status> responseList = mock(ResponseList.class);
         User user = mock(User.class);
