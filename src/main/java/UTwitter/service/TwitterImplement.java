@@ -71,7 +71,7 @@ public class TwitterImplement {
 
 
     public List<TwitterResponseModel> getFilteredTweets(String tweets) {
-        ArrayList<TwitterResponseModel> tweetList = new ArrayList<>();
+        ArrayList<TwitterResponseModel> tweetList;
         List<TwitterResponseModel> filteredTweets;
          tweetList= getTweets();
         int len = tweets.length();
