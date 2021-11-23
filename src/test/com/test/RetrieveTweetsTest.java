@@ -1,8 +1,8 @@
 package com.test;
 
-import UTwitter.resources.Controller;
-import UTwitter.resources.MessageRequest;
-import UTwitter.service.TwitterImplement;
+import com.resources.Controller;
+import com.resources.MessageRequest;
+import com.service.TwitterImplement;
 import model.TwitterResponseModel;
 import org.junit.Assert;
 import org.junit.Before;
@@ -22,11 +22,12 @@ import static org.mockito.Mockito.when;
 
 
 @RunWith(MockitoJUnitRunner.class)
-public class RetrieveTweetsTest_implement {
+public class RetrieveTweetsTest {
     Controller tweetPost;
     TwitterFactory twitterFactory;
     TwitterImplement twitterImplement;
     Twitter twitter;
+    TwitterResponseModel twitterResponseModel;
 
 
     @Before
@@ -35,7 +36,7 @@ public class RetrieveTweetsTest_implement {
         twitter = mock(Twitter.class);
         twitterFactory = mock(TwitterFactory.class);
         when(twitterFactory.getInstance()).thenReturn(twitter);
-        twitterImplement = new TwitterImplement(twitterFactory);
+        twitterImplement = new TwitterImplement(twitterFactory, twitterResponseModel);
     }
 
     @Test
@@ -66,7 +67,14 @@ public class RetrieveTweetsTest_implement {
         Response expectedTweet = Response.ok(arrayList).build();
         Response actualTweet = tweetPost.fetchTweets();
         Assert.assertEquals(expectedTweet.getStatus(), actualTweet.getStatus());
-        Assert.assertEquals(expectedTweet.getStatus(), actualTweet.getStatus());
+    }
+    @Test
+    public void noTweetMatch_Test() throws TwitterException {
+        ResponseList<Status> responseList = mock(ResponseList.class);
+        when(responseList.size()).thenReturn(0);
+        when(twitter.getHomeTimeline()).thenReturn(responseList);
+        List<TwitterResponseModel> actual = twitterImplement.getFilteredTweets("forest");
+        Assert.assertEquals(Arrays.asList(), actual);
     }
 
     @Test

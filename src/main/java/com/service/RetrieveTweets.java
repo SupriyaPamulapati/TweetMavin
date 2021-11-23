@@ -1,4 +1,4 @@
-package UTwitter.service;
+package com.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +11,4 @@ public class RetrieveTweets {
         this.twitterImplement = twitterImplement;
     }
 
-    public RetrieveTweets() {
-    }
 }

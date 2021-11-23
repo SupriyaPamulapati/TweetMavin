@@ -4,19 +4,23 @@ public class TwitterResponseModel {
     String message;
     User user;
     String createdAt;
+
     public TwitterResponseModel(String message, String twitterHandle, String name, String profileImageUrl, String createdAt) {
         this.message = message;
-        this.user = new User(name,twitterHandle,profileImageUrl);
+        this.user = new User(name, twitterHandle, profileImageUrl);
         this.createdAt = createdAt;
     }
 
+    public TwitterResponseModel() {
 
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public User getUser() {
         return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getMessage() {
@@ -27,14 +31,15 @@ public class TwitterResponseModel {
         this.message = message;
     }
 
-    public String getCreated() {
-        return createdAt;
-    }
-
     public String setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
         return createdAt;
     }
+
+    public String getCreated() {
+        return createdAt;
+    }
+
 }
 
 

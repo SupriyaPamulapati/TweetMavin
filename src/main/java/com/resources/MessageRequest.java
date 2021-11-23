@@ -1,4 +1,4 @@
-package UTwitter.resources;
+package com.resources;
 
 
 public class MessageRequest {

@@ -1,4 +1,4 @@
-package UTwitter.service;
+package com.service;
 
 public class PostTweet {
     TwitterImplement twitterImplement;
@@ -7,8 +7,6 @@ public class PostTweet {
         this.twitterImplement = twitterImplement;
     }
 
-    public PostTweet() {
-    }
 }
 
 
