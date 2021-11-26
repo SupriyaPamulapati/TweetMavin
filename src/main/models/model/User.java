@@ -1,5 +1,7 @@
 package model;
 
+import org.codehaus.plexus.component.annotations.Component;
+
 
 public class User {
     String twitterHandle;

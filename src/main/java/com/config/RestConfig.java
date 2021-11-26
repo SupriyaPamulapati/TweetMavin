@@ -1,4 +1,4 @@
-package com;
+package com.config;
 
 import io.dropwizard.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
