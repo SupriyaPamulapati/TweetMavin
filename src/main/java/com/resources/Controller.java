@@ -49,7 +49,14 @@ public class Controller {
         List<TwitterResponseModel> response = twitterImplement.getFilteredTweets(searchKey);
         return Response.ok(response).build();
     }
-
+    @GET
+    @Path("/tweetsPage")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response pagination(@QueryParam("start") int start, @QueryParam("size") int size) throws TwitterException {
+        List<TwitterResponseModel> response;
+        response = twitterImplement.getTweetsPage(start, size);
+        return Response.ok(response).build();
+    }
     @POST
     @Path("/postTweets")
     @Consumes(MediaType.APPLICATION_JSON)
