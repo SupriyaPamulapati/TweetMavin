@@ -1,4 +1,4 @@
-/*package com.test;
+package com.test;
 
 import com.resources.Controller;
 import com.resources.MessageRequest;
@@ -120,5 +120,5 @@ public class RetrieveTweetsTest {
         Assert.assertEquals(Arrays.asList(), actual);
     }
 
-}*/
+}
 
