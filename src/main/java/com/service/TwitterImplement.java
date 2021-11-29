@@ -4,7 +4,6 @@ import com.config.RestConfig;
 import model.TwitterResponseModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import twitter4j.Status;
 import twitter4j.Twitter;
@@ -28,7 +27,6 @@ public class TwitterImplement {
     Twitter twitter;
     Logger log = LoggerFactory.getLogger(TwitterImplement.class);
 
-    @Autowired
     public TwitterImplement() {
         restConfig = new RestConfig();
         configurationBuilder = restConfig.configurationBuilder();
@@ -50,8 +48,8 @@ public class TwitterImplement {
         return status;
     }
 
-    public ArrayList<TwitterResponseModel> getTweets() {
-        ArrayList<TwitterResponseModel> tweetList = new ArrayList<>();
+    public List<TwitterResponseModel> getTweets() {
+        List<TwitterResponseModel> tweetList = new ArrayList<>();
         try {
             List<Status> statuses = twitter.getHomeTimeline();
             for (int i = 0; i < statuses.size(); i++) {
@@ -74,7 +72,7 @@ public class TwitterImplement {
 
 
     public List<TwitterResponseModel> getFilteredTweets(String tweets) {
-        ArrayList<TwitterResponseModel> tweetList = getTweets();
+        List<TwitterResponseModel> tweetList = getTweets();
         int len = tweets.length();
         CharSequence charSequence = tweets.subSequence(0, len);
         List<TwitterResponseModel> filteredTweets = tweetList.stream().filter(t -> t.getMessage().contains(charSequence)).collect(Collectors.toList());
@@ -82,7 +80,7 @@ public class TwitterImplement {
     }
 
     public List<TwitterResponseModel> getTweetsPage(int start, int size) throws TwitterException {
-        ArrayList<TwitterResponseModel> tweetPage = getTweets();
+        List<TwitterResponseModel> tweetPage = getTweets();
         return tweetPage.subList(start, start + size);
     }
 

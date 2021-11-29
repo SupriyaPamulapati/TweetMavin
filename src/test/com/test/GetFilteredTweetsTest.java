@@ -65,9 +65,9 @@ public class GetFilteredTweetsTest {
         str.add("A. good day");
         str.add("good and easy life");
         str.add("good to b good");
-        when(tweetPost.filteredTweets("good")).thenReturn(Response.ok(str).build());
+        when(tweetPost.filteredTweets("good")).thenReturn((List<TwitterResponseModel>) Response.ok(str).build());
         Response expectedTweet = Response.ok(str).build();
-        Response actualTweet = tweetPost.filteredTweets("good");
+        Response actualTweet = (Response) tweetPost.filteredTweets("good");
         Assert.assertEquals(expectedTweet.getEntity(), actualTweet.getEntity());
     }
 
@@ -80,12 +80,12 @@ public class GetFilteredTweetsTest {
         str.add("A. good day");
         str.add("good and easy life");
         str.add("good to b good");
-        when(tweetPost.filteredTweets("good")).thenReturn(Response.ok(str).build());
+        when(tweetPost.filteredTweets("good")).thenReturn((List<TwitterResponseModel>) Response.ok(str).build());
         Response expectedTweet = Response.ok(str).build();
         String s = "good";
         Response actualTweet = null;
         if (s == "good" || s == "Good") {
-            actualTweet = tweetPost.filteredTweets(s);
+            actualTweet = (Response) tweetPost.filteredTweets(s);
         }
         Assert.assertEquals(expectedTweet.getEntity(), actualTweet.getEntity());
     }
@@ -116,7 +116,7 @@ public class GetFilteredTweetsTest {
         when(s1.getCreatedAt()).thenReturn(created);
         when(twitter.getHomeTimeline()).thenReturn(responseList);
         expectedList.add(twitterResponseModel);
-        ArrayList<TwitterResponseModel> actualList = (ArrayList<TwitterResponseModel>) twitterImplement.getFilteredTweets("good and easy life");
+        ArrayList<TwitterResponseModel> actualList = (ArrayList<TwitterResponseModel>) twitterImplement.getFilteredTweets("good and easy life..");
         Assert.assertEquals(expectedList, actualList);
     }
 }

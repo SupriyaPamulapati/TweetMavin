@@ -10,7 +10,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
-@SpringBootApplication(scanBasePackages = {"com.resources", "com.service", "com.tweet", "com.config,com.base"})
+
+@SpringBootApplication(scanBasePackages = {"com.resources", "com.service", "com.tweet", "com.config","com.base"})
 public class TwitterRunner extends Application<RestConfig> {
     private static final Logger logger = LoggerFactory.getLogger(TwitterRunner.class);
     RestConfig restConfig;

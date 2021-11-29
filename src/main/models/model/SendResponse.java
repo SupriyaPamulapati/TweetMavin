@@ -2,18 +2,7 @@ package model;
 
 public class SendResponse {
     private String message;
-
-    public int getStatusCode() {
-        return statusCode;
-    }
-
-    public void setStatusCode(int statusCode) {
-        this.statusCode = statusCode;
-    }
-
     private int statusCode;
-
-
 
     public SendResponse(String message, int statusCode) {
         this.message = message;
@@ -23,6 +12,13 @@ public class SendResponse {
     public SendResponse() {
     }
 
+    public int getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(int statusCode) {
+        this.statusCode = statusCode;
+    }
 
     public String getMessage() {
         return message;
