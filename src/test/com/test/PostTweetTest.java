@@ -1,4 +1,4 @@
-/*package com.test;
+package com.test;
 
 import com.resources.Controller;
 import com.resources.MessageRequest;
@@ -90,7 +90,7 @@ public class PostTweetTest {
     @Test
     public void test_postToTwitterUsingTwitter4J() {
         Twitter twitter = TwitterFactory.getSingleton();
-        String expectedMessage = "....Test....,";
+        String expectedMessage = ".....Test....,";
         Status statuses = null;
         try {
             statuses = twitter.updateStatus(expectedMessage);
@@ -111,4 +111,4 @@ public class PostTweetTest {
     }
 
 
-}*/
+}

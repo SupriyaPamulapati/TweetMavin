@@ -56,7 +56,7 @@ public class GetFilteredTweetsTest {
         twitterImplement = new TwitterImplement(twitterFactory, twitterResponseModel);
     }
 
-   //test case to check success case of fetching the tweets based on search key word
+    //test case to check success case of fetching the tweets based on search key word
     @Test
     public void getFilteredTweets_SuccessCase() throws TwitterException {
         MessageRequest req = null;
@@ -70,7 +70,8 @@ public class GetFilteredTweetsTest {
         Response actualTweet = tweetPost.filteredTweets("good");
         Assert.assertEquals(expectedTweet.getEntity(), actualTweet.getEntity());
     }
-   //test case to check the case-sensitivity of search key word
+
+    //test case to check the case-sensitivity of search key word
     @Test
     public void caseSensitiveTest() throws TwitterException {
         MessageRequest req = null;
@@ -89,7 +90,7 @@ public class GetFilteredTweetsTest {
         Assert.assertEquals(expectedTweet.getEntity(), actualTweet.getEntity());
     }
 
-   // testcase to check with a search key which is not in timeline
+    // testcase to check with a search key which is not in timeline
     @Test
     public void noTweetMatchTest() throws TwitterException {
         ResponseList<Status> responseList = mock(ResponseList.class);
@@ -98,6 +99,7 @@ public class GetFilteredTweetsTest {
         List<TwitterResponseModel> actual = twitterImplement.getFilteredTweets("forest");
         Assert.assertEquals(Arrays.asList(), actual);
     }
+
     @Test
     public void getTweetTest() throws TwitterException {
         ArrayList<TwitterResponseModel> expectedList = mock(ArrayList.class);

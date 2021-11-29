@@ -36,6 +36,7 @@ public class TwitterImplement {
         twitter = twitterFactory.getInstance();
 
     }
+
     public TwitterImplement(TwitterFactory twitterFactory, TwitterResponseModel twitterResponseModel) {
         this.twitterFactory = twitterFactory;
         this.twitter = twitterFactory.getInstance();

@@ -68,6 +68,7 @@ public class RetrieveTweetsTest {
         Response actualTweet = tweetPost.fetchTweets();
         Assert.assertEquals(expectedTweet.getStatus(), actualTweet.getStatus());
     }
+
     @Test
     public void noTweetMatch_Test() throws TwitterException {
         ResponseList<Status> responseList = mock(ResponseList.class);

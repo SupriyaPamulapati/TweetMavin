@@ -6,16 +6,13 @@ import org.eclipse.jetty.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import twitter4j.Status;
 import twitter4j.TwitterException;
 
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Date;
@@ -36,10 +33,12 @@ public class Controller {
     public Controller() {
 
     }
+
     @Bean
     public TwitterImplement getTwitterData() {
         return new TwitterImplement();
     }
+
     @RequestMapping("/healthCheck")
     public String healthCheck() {
         return "Ping Received at " + new Date();
@@ -52,14 +51,14 @@ public class Controller {
 
     @RequestMapping("/filteredTweets/{search}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response filteredTweets(@PathVariable String  search) throws TwitterException {
+    public Response filteredTweets(@PathVariable String search) throws TwitterException {
         List<TwitterResponseModel> response = twitterImplement.getFilteredTweets(search);
         return Response.ok(response).build();
     }
 
     @RequestMapping("/tweetsPage/start/{start}/size/{size}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response pagination(@PathVariable int start,@PathVariable int size) throws TwitterException {
+    public Response pagination(@PathVariable int start, @PathVariable int size) throws TwitterException {
         List<TwitterResponseModel> response;
         response = twitterImplement.getTweetsPage(start, size);
         return Response.ok(response).build();
