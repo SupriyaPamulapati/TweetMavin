@@ -3,14 +3,18 @@ package com.resources;
 import com.service.TwitterImplement;
 import model.SendResponse;
 import model.TwitterResponseModel;
+import org.eclipse.jetty.http.HttpStatus;
 import org.eclipse.jetty.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import twitter4j.Status;
 import twitter4j.TwitterException;
 
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -53,20 +57,36 @@ public class Controller {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/postTweets")
-    public SendResponse sendTweet(@RequestBody MessageRequest request) throws TwitterException {
+    public ResponseEntity<SendResponse> sendTweet(@RequestBody MessageRequest request) {
         logger.info("got into post");
+        HttpHeaders headers=null;
+        headers = new HttpHeaders();
+        headers.add("Custom-Header", "foo");
         String post = request.getMsg();
         if (StringUtil.isEmpty(post)) {
             logger.error("error happened");
-            return new SendResponse("Field is empty",400);
+            return new ResponseEntity<SendResponse>(
+                    new SendResponse(HttpStatus.BAD_REQUEST_400,"Please enter a Valid Tweet",400),headers,HttpStatus.OK_200);
         } else {
-            Status status = twitterImplement.sendTweet(post);
-            if (status.getText().equals(post)) {
-                logger.info("successfully posted");
-                return new SendResponse("Tweet posted Successfully",200);
-            } else {
-                logger.error("internal error occurred");
-                return new SendResponse("Request incomplete",500);
+            try {
+                Status status = twitterImplement.sendTweet(post);
+                if (status.getText().equals(post)) {
+                    logger.info("successfully posted");
+                    return new ResponseEntity<SendResponse>(
+                            new SendResponse(HttpStatus.OK_200, "Tweet posted Successfully", 200), headers, HttpStatus.OK_200);
+                } else {
+                    logger.error("internal error occurred");
+                    return new ResponseEntity<SendResponse>(
+                            new SendResponse(HttpStatus.INTERNAL_SERVER_ERROR_500, "Request tweet is not correct", 500), headers, HttpStatus.INTERNAL_SERVER_ERROR_500);
+                }
+            }catch (BadRequestException e){
+                logger.error("Tweet Was Not Done Invalid Request", e);
+                return new ResponseEntity<SendResponse>(
+                        new SendResponse(HttpStatus.BAD_REQUEST_400,"Please enter a Valid Tweet",400),headers,HttpStatus.BAD_REQUEST_400);
+            } catch (Exception e) {
+                logger.error("Tweet Was Not Sent");
+                return new ResponseEntity<SendResponse>(
+                        new SendResponse(HttpStatus.INTERNAL_SERVER_ERROR_500,"Request tweet is not correct",400),headers,HttpStatus.BAD_REQUEST_400);
             }
         }
 

@@ -3,13 +3,12 @@ package model;
 public class SendResponse {
     private String message;
     private int statusCode;
+    private int code;
 
-    public SendResponse(String message, int statusCode) {
+    public SendResponse(int code,String message, int statusCode) {
+        this.code=code;
         this.message = message;
         this.statusCode = statusCode;
-    }
-
-    public SendResponse() {
     }
 
     public int getStatusCode() {

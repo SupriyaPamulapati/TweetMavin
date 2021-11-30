@@ -1,7 +1,6 @@
 package com.test;
 
 import com.resources.Controller;
-import com.resources.MessageRequest;
 import com.service.TwitterImplement;
 import model.TwitterResponseModel;
 import org.junit.Assert;
@@ -30,8 +29,10 @@ public class RetrieveTweetsTest {
     TwitterResponseModel twitterResponseModel;
 
 
+
     @Before
     public void setUp() {
+        twitterResponseModel = Mockito.mock(TwitterResponseModel.class);
         tweetPost = Mockito.mock(Controller.class);
         twitter = mock(Twitter.class);
         twitterFactory = mock(TwitterFactory.class);
@@ -59,33 +60,23 @@ public class RetrieveTweetsTest {
 
     @Test
     public void testcase1_getTweets() {
-        MessageRequest req = null;
-        List<String> str = new ArrayList<String>();
-        str.add("hlo");
-        when(tweetPost.fetchTweets()).thenReturn((List) Response.ok(str).build());
+        List<TwitterResponseModel> str = new ArrayList<>();
+        str.add(twitterResponseModel);
+        when(tweetPost.fetchTweets()).thenReturn(str);
         ArrayList<String> arrayList = new ArrayList<String>();
-        arrayList.add("hlo");
+        arrayList.add("haii");
         Response expectedTweet = Response.ok(arrayList).build();
-        Response actualTweet = (Response) tweetPost.fetchTweets();
-        Assert.assertEquals(expectedTweet.getStatus(), actualTweet.getStatus());
-    }
-
-    @Test
-    public void noTweetMatch_Test() throws TwitterException {
-        ResponseList<Status> responseList = mock(ResponseList.class);
-        when(responseList.size()).thenReturn(0);
-        when(twitter.getHomeTimeline()).thenReturn(responseList);
-        List<TwitterResponseModel> actual = twitterImplement.getFilteredTweets("forest");
-        Assert.assertEquals(Arrays.asList(), actual);
+        List<TwitterResponseModel> actualTweet = tweetPost.fetchTweets();
+        Assert.assertEquals(expectedTweet.getEntity(), actualTweet);
     }
 
     @Test
     public void testcase_noTweetsFound() {
-        when(tweetPost.fetchTweets()).thenReturn((List) Response.ok().build());
+        ArrayList<TwitterResponseModel> str = null;
+        when(tweetPost.fetchTweets()).thenReturn(str);
         Response expectedTweet = Response.ok().build();
-        Response actualTweet = (Response) tweetPost.fetchTweets();
-        Assert.assertEquals(expectedTweet.getEntity(), actualTweet.getEntity());
-        Assert.assertEquals(expectedTweet.getStatus(), actualTweet.getStatus());
+        List<TwitterResponseModel> actualTweet = tweetPost.fetchTweets();
+        Assert.assertEquals(expectedTweet.getEntity(), actualTweet);
     }
 
     @Test
