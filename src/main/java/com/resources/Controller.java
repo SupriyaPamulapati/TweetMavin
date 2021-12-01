@@ -66,7 +66,7 @@ public class Controller {
         if (StringUtil.isEmpty(post)) {
             logger.error("error happened");
             return new ResponseEntity<SendResponse>(
-                    new SendResponse(HttpStatus.BAD_REQUEST_400,"Please enter a Valid Tweet",400),headers,HttpStatus.OK_200);
+                    new SendResponse(HttpStatus.BAD_REQUEST_400,"Please enter a Valid Tweet",400),headers,HttpStatus.BAD_REQUEST_400);
         } else {
             try {
                 Status status = twitterImplement.sendTweet(post);
@@ -86,7 +86,7 @@ public class Controller {
             } catch (Exception e) {
                 logger.error("Tweet Was Not Sent");
                 return new ResponseEntity<SendResponse>(
-                        new SendResponse(HttpStatus.INTERNAL_SERVER_ERROR_500,"Request tweet is not correct",400),headers,HttpStatus.BAD_REQUEST_400);
+                        new SendResponse(HttpStatus.INTERNAL_SERVER_ERROR_500,"Request tweet is not correct",400),headers,HttpStatus.INTERNAL_SERVER_ERROR_500);
             }
         }
 
