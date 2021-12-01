@@ -1,6 +1,6 @@
 debug: true
-oauth.consumerKey: *********************
-oauth.consumerSecret: ******************************************
+consumerKey: ************************
+consumerSecret: ******************************************
 oauth.accessToken: **************************************************
 oauth.accessTokenSecret: ******************************************
 

@@ -18,8 +18,6 @@ import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 
-import javax.ws.rs.core.Response;
-
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -87,10 +85,10 @@ public class PostTweetTest {
         Assert.assertEquals(expectedTweet, actualTweet);
     }
 
-    @Test
+   @Test
     public void test_postToTwitterUsingTwitter4J() {
         Twitter twitter = TwitterFactory.getSingleton();
-        String expectedMessage = "....Test....,";
+        String expectedMessage = ".....Test....,";
         Status statuses = null;
         try {
             statuses = twitter.updateStatus(expectedMessage);
@@ -101,14 +99,5 @@ public class PostTweetTest {
         String actualMessage = status.getText();
         Assert.assertEquals(expectedMessage, actualMessage);
     }
-
-    @Test
-    public void testcase_nullTweet() throws TwitterException {
-        MessageRequest messageRequest = new MessageRequest("");
-        Response actual = controller.sendTweet(messageRequest);
-        Response expected = Response.ok().build();
-        Assert.assertEquals(expected.getEntity(), actual.getEntity());
-    }
-
 
 }

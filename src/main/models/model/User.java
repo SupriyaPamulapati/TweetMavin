@@ -1,6 +1,5 @@
 package model;
 
-
 public class User {
     String twitterHandle;
     String name;
