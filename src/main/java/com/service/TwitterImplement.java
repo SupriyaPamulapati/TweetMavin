@@ -4,6 +4,10 @@ import com.config.RestConfig;
 import model.TwitterResponseModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import twitter4j.Status;
 import twitter4j.Twitter;
@@ -18,6 +22,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@CacheConfig(cacheNames = {"getTweets","filteredTweets"})
 @Service
 public class TwitterImplement {
     RestConfig restConfig;
@@ -41,6 +46,8 @@ public class TwitterImplement {
         this.twitterResponseModel = twitterResponseModel;
     }
 
+    @Cacheable(cacheNames = {"getTweets"})
+    @CacheEvict(cacheNames = {"getTweets"},allEntries = true)
     public Status sendTweet(String args) throws TwitterException {
         Logger log = LoggerFactory.getLogger(TwitterImplement.class);
         Status status;
@@ -48,6 +55,8 @@ public class TwitterImplement {
         return status;
     }
 
+    @Cacheable(cacheNames = {"getTweets"})
+    @Scheduled(fixedRate = 2000)
     public List<TwitterResponseModel> getTweets() {
         List<TwitterResponseModel> tweetList = new ArrayList<>();
         try {
@@ -70,7 +79,7 @@ public class TwitterImplement {
         return tweetList;
     }
 
-
+    @Cacheable(cacheNames = {"filteredTweets"})
     public List<TwitterResponseModel> getFilteredTweets(String tweets) {
         List<TwitterResponseModel> tweetList = getTweets();
         int len = tweets.length();
@@ -78,7 +87,7 @@ public class TwitterImplement {
         List<TwitterResponseModel> filteredTweets = tweetList.stream().filter(t -> t.getMessage().contains(charSequence)).collect(Collectors.toList());
         return filteredTweets;
     }
-
+    @Cacheable(cacheNames = {"pages"})
     public List<TwitterResponseModel> getTweetsPage(int start, int size) throws TwitterException {
         List<TwitterResponseModel> tweetPage = getTweets();
         return tweetPage.subList(start, start + size);
