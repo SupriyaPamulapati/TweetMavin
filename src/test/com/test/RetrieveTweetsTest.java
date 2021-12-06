@@ -46,7 +46,6 @@ public class RetrieveTweetsTest {
         date = dateFormat.format(created);
     }
 
-
     @Before
     public void setUp() {
         twitterResponseModel = Mockito.mock(TwitterResponseModel.class);
