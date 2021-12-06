@@ -12,9 +12,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.ComponentScan;
+
 
 @EnableCaching
-@SpringBootApplication(scanBasePackages = {"com.resources", "com.service", "com.tweet", "com.config", "com.base"})
+@SpringBootApplication
+@ComponentScan(basePackages = {"com.resources", "com.service", "com.tweet", "com.config", "com.base"})
 public class TwitterRunner extends Application<RestConfig> {
     private static final Logger logger = LoggerFactory.getLogger(TwitterRunner.class);
     RestConfig restConfig;

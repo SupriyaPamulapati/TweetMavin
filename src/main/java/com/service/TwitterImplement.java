@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 @CacheConfig(cacheNames = {"getTweets", "filteredTweets"})
 @Service
 public class TwitterImplement {
@@ -109,7 +110,8 @@ public class TwitterImplement {
      * @param tweets is used to search in a list of tweets.
      * @return returns filtered tweets.
      */
-    @Cacheable(cacheNames = {"filteredTweets"})
+
+    @Cacheable(cacheNames = {"filters"})
     public List<TwitterResponseModel> getFilteredTweets(String tweets) {
         List<TwitterResponseModel> tweetList = getTweets();
         int len = tweets.length();
