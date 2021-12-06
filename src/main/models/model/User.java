@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * User class contain user details
+ */
 public class User {
     String twitterHandle;
     String name;

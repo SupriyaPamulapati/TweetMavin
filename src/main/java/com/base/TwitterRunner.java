@@ -1,3 +1,6 @@
+/**
+ * This runner package includes TwitterRunner class.
+ */
 package com.base;
 
 import com.config.RestConfig;
@@ -12,7 +15,7 @@ import org.springframework.cache.annotation.EnableCaching;
 
 
 @EnableCaching
-@SpringBootApplication(scanBasePackages = {"com.resources", "com.service", "com.tweet", "com.config","com.base"})
+@SpringBootApplication(scanBasePackages = {"com.resources", "com.service", "com.tweet", "com.config", "com.base"})
 public class TwitterRunner extends Application<RestConfig> {
     private static final Logger logger = LoggerFactory.getLogger(TwitterRunner.class);
     RestConfig restConfig;

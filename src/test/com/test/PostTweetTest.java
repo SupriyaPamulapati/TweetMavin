@@ -85,7 +85,7 @@ public class PostTweetTest {
         Assert.assertEquals(expectedTweet, actualTweet);
     }
 
-   @Test
+    @Test
     public void test_postToTwitterUsingTwitter4J() {
         Twitter twitter = TwitterFactory.getSingleton();
         String expectedMessage = ".....Test....,";

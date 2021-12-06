@@ -30,12 +30,13 @@ public class RetrieveTweetsTest {
     Twitter twitter;
     TwitterResponseModel twitterResponseModel;
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-    String twitterHandle="@Supriya";
-    String name="Supriya";
-    String message="try";
-    String profileImageUrl="www.Supriya.com";
+    String twitterHandle = "@Supriya";
+    String name = "Supriya";
+    String message = "try";
+    String profileImageUrl = "www.Supriya.com";
     Date created;
     String date;
+
     {
         try {
             created = dateFormat.parse("16-11-2021 01:03:00");
@@ -44,7 +45,6 @@ public class RetrieveTweetsTest {
         }
         date = dateFormat.format(created);
     }
-
 
 
     @Before
@@ -59,7 +59,7 @@ public class RetrieveTweetsTest {
     }
 
     @Test
-    public void testcase_searchTweets() throws TwitterException {
+    public void testcaseSearchTweets() throws TwitterException {
         Twitter twitter = TwitterFactory.getSingleton();
         Query query = new Query("SupriyaChowdar9");
         QueryResult result = twitter.search(query);
@@ -76,7 +76,7 @@ public class RetrieveTweetsTest {
     }
 
     @Test
-    public void testcase1_getTweets() {
+    public void testCase1GetTweets() {
         List<TwitterResponseModel> str = new ArrayList<>();
         str.add(twitterResponseModel);
         when(tweetPost.fetchTweets()).thenReturn(str);
@@ -88,7 +88,7 @@ public class RetrieveTweetsTest {
     }
 
     @Test
-    public void testcase_noTweetsFound() {
+    public void testCaseNoTweetsFound() {
         ArrayList<TwitterResponseModel> str = null;
         when(tweetPost.fetchTweets()).thenReturn(str);
         Response expectedTweet = Response.ok().build();
@@ -97,10 +97,10 @@ public class RetrieveTweetsTest {
     }
 
     @Test
-    public void fetchTweetTest_successCase_listIsNotEmpty() throws TwitterException {
+    public void fetchTweetTestLstIsNotEmpty() throws TwitterException {
         ResponseList<Status> list = mock(ResponseList.class);
-        List<TwitterResponseModel> listExpected=spy(ArrayList.class);
-        User user=mock(User.class);
+        List<TwitterResponseModel> listExpected = spy(ArrayList.class);
+        User user = mock(User.class);
         Status s1 = mock(Status.class);
         when(list.size()).thenReturn(1);
         when(list.get(0)).thenReturn(s1);
@@ -113,11 +113,11 @@ public class RetrieveTweetsTest {
         when(twitter.getHomeTimeline()).thenReturn(list);
         listExpected.add((twitterResponseModel));
         List<TwitterResponseModel> actualTweet = twitterImplement.getTweets();
-        Assert.assertEquals(listExpected.size(),actualTweet.size());
+        Assert.assertEquals(listExpected.size(), actualTweet.size());
     }
 
     @Test
-    public void testCase_emptyTimeline() throws TwitterException {
+    public void testCaseEmptyTimeline() throws TwitterException {
         ResponseList<Status> responseList = mock(ResponseList.class);
         when(responseList.size()).thenReturn(0);
         when(twitter.getHomeTimeline()).thenReturn(responseList);
