@@ -11,6 +11,11 @@ public class SendResponse {
         return message;
     }
 
+    /**
+     * Used to send response on tweet posted.
+     *
+     * @param message is a response message.
+     */
     public void setMessage(String message) {
         this.message = message;
     }

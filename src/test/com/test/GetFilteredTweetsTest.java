@@ -16,7 +16,10 @@ import twitter4j.*;
 import javax.ws.rs.core.Response;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -36,8 +39,6 @@ public class GetFilteredTweetsTest {
     Date created;
     String date;
     User user;
-
-
     {
         try {
             created = dateFormat.parse("16-11-2021 01:03:00");
@@ -62,10 +63,10 @@ public class GetFilteredTweetsTest {
     @Test
     public void getFilteredTweets_SuccessCase() throws TwitterException {
         MessageRequest req = null;
-        List<TwitterResponseModel>str=new ArrayList<>();
+        List<TwitterResponseModel> str = new ArrayList<>();
         when(tweetPost.filteredTweets("good")).thenReturn(str);
         Response expectedTweet = Response.ok(str).build();
-       List<TwitterResponseModel> actualTweet = tweetPost.filteredTweets("good");
+        List<TwitterResponseModel> actualTweet = tweetPost.filteredTweets("good");
         Assert.assertEquals(expectedTweet.getEntity(), actualTweet);
     }
 

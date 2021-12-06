@@ -11,6 +11,10 @@ public class TwitterResponseModel {
         this.createdAt = createdAt;
     }
 
+    /**
+     * .
+     * Constructor
+     */
     public TwitterResponseModel() {
 
     }
@@ -39,7 +43,4 @@ public class TwitterResponseModel {
     public String getCreated() {
         return createdAt;
     }
-
 }
-
-

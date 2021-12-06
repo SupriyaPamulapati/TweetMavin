@@ -34,6 +34,11 @@ public class RestConfig extends Configuration {
         accessToken = properties.getProperty("accessToken");
     }
 
+    /**
+     * .
+     *
+     * @return configurationbuilder object
+     */
     public ConfigurationBuilder configurationBuilder() {
         ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
         configurationBuilder.setDebugEnabled(true)
@@ -43,5 +48,4 @@ public class RestConfig extends Configuration {
                 .setOAuthAccessTokenSecret(accessTokenSecret);
         return configurationBuilder;
     }
-
 }

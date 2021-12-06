@@ -21,7 +21,6 @@ import twitter4j.TwitterFactory;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-
 @RunWith(MockitoJUnitRunner.class)
 public class PostTweetTest {
     Controller controller;
@@ -85,7 +84,7 @@ public class PostTweetTest {
         Assert.assertEquals(expectedTweet, actualTweet);
     }
 
-   @Test
+    @Test
     public void test_postToTwitterUsingTwitter4J() {
         Twitter twitter = TwitterFactory.getSingleton();
         String expectedMessage = ".....Test....,";

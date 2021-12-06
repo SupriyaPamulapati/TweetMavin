@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import twitter4j.Status;
 import twitter4j.Twitter;
@@ -21,7 +22,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@CacheConfig(cacheNames={"allTweets","filters","pages"})
+
+@CacheConfig(cacheNames = {"getTweets", "filteredTweets"})
 @Service
 public class TwitterImplement {
     RestConfig restConfig;
@@ -31,6 +33,12 @@ public class TwitterImplement {
     Twitter twitter;
     Logger log = LoggerFactory.getLogger(TwitterImplement.class);
 
+    /**
+     * .
+     * Used for test case.
+     * this constructor is used for getting Twitter object
+     * based on the authentication of user
+     */
     public TwitterImplement() {
         restConfig = new RestConfig();
         configurationBuilder = restConfig.configurationBuilder();
@@ -39,21 +47,42 @@ public class TwitterImplement {
 
     }
 
+    /**
+     * .
+     * Used for test case.
+     *
+     * @param twitterFactory
+     * @param twitterResponseModel
+     */
     public TwitterImplement(TwitterFactory twitterFactory, TwitterResponseModel twitterResponseModel) {
         this.twitterFactory = twitterFactory;
         this.twitter = twitterFactory.getInstance();
         this.twitterResponseModel = twitterResponseModel;
     }
-    @Cacheable(cacheNames={"allTweets"})
-    @CacheEvict(cacheNames={"allTweets"},allEntries = true)
+
+    /**
+     * @param args
+     * @return This method will return Status object
+     * which contains status of tweet which is posted on timeline
+     */
+    @Cacheable(cacheNames = {"getTweets"})
+    @CacheEvict(cacheNames = {"getTweets"}, allEntries = true)
     public Status sendTweet(String args) throws TwitterException {
         Logger log = LoggerFactory.getLogger(TwitterImplement.class);
         Status status;
         status = twitter.updateStatus(args);
         return status;
     }
-    @Cacheable(cacheNames={"allTweets"})
+
+    /**
+     * getTweets() used to get tweets from user timeline.
+     *
+     * @return returns tweets to resources class.
+     */
+    @Cacheable(cacheNames = {"getTweets"})
+    @Scheduled(fixedRate = 2000)
     public List<TwitterResponseModel> getTweets() {
+        log.info("Started get tweets method");
         List<TwitterResponseModel> tweetList = new ArrayList<>();
         try {
             List<Status> statuses = twitter.getHomeTimeline();
@@ -75,7 +104,14 @@ public class TwitterImplement {
         return tweetList;
     }
 
-    @Cacheable(cacheNames={"filters"})
+    /**
+     * getFilteredTweets() used to get filtered tweets from user timeline.
+     *
+     * @param tweets is used to search in a list of tweets.
+     * @return returns filtered tweets.
+     */
+
+    @Cacheable(cacheNames = {"filters"})
     public List<TwitterResponseModel> getFilteredTweets(String tweets) {
         List<TwitterResponseModel> tweetList = getTweets();
         int len = tweets.length();
@@ -83,10 +119,16 @@ public class TwitterImplement {
         List<TwitterResponseModel> filteredTweets = tweetList.stream().filter(t -> t.getMessage().contains(charSequence)).collect(Collectors.toList());
         return filteredTweets;
     }
-    @Cacheable(cacheNames={"pages"})
+
+    /**
+     * etTweetsPage() used to get filtered tweets from user timeline.
+     *
+     * @param start size is used to search in a list of tweets.
+     * @return returns filtered tweets.
+     */
+    @Cacheable(cacheNames = {"pages"})
     public List<TwitterResponseModel> getTweetsPage(int start, int size) throws TwitterException {
         List<TwitterResponseModel> tweetPage = getTweets();
         return tweetPage.subList(start, start + size);
     }
-
 }
