@@ -7,7 +7,9 @@ public class User {
     String twitterHandle;
     String name;
     String profileImageUrl;
-
+    /**
+     * constructor
+     */
     public User(String twitterHandle, String name, String profileImageUrl) {
         this.twitterHandle = twitterHandle;
         this.name = name;
@@ -38,4 +40,3 @@ public class User {
         this.profileImageUrl = profileImageUrl;
     }
 }
-

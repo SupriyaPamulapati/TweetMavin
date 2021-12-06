@@ -39,8 +39,6 @@ public class GetFilteredTweetsTest {
     Date created;
     String date;
     User user;
-
-
     {
         try {
             created = dateFormat.parse("16-11-2021 01:03:00");

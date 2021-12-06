@@ -123,6 +123,5 @@ public class RetrieveTweetsTest {
         List<TwitterResponseModel> actual = twitterImplement.getTweets();
         Assert.assertEquals(Arrays.asList(), actual);
     }
-
 }
 

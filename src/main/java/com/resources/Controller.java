@@ -29,7 +29,6 @@ import javax.ws.rs.core.Response;
 import java.util.Date;
 import java.util.List;
 
-
 @Produces(MediaType.APPLICATION_JSON)
 @RestController
 public class Controller {
@@ -47,7 +46,6 @@ public class Controller {
      *
      * @return used to return tweets as response.
      */
-
     @RequestMapping(method = RequestMethod.GET, value = "/getTweets")
     public List<TwitterResponseModel> fetchTweets() {
         return twitterImplement.getTweets();
@@ -122,6 +120,4 @@ public class Controller {
         }
 
     }
-
-
 }

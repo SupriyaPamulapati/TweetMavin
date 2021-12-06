@@ -16,7 +16,6 @@ public class SendResponse {
      *
      * @param message is a response message.
      */
-
     public void setMessage(String message) {
         this.message = message;
     }

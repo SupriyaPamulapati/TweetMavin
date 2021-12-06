@@ -129,5 +129,4 @@ public class TwitterImplement {
         List<TwitterResponseModel> tweetPage = getTweets();
         return tweetPage.subList(start, start + size);
     }
-
 }

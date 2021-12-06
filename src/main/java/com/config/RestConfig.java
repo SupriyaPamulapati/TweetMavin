@@ -39,7 +39,6 @@ public class RestConfig extends Configuration {
      *
      * @return configurationbuilder object
      */
-
     public ConfigurationBuilder configurationBuilder() {
         ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
         configurationBuilder.setDebugEnabled(true)
@@ -49,5 +48,4 @@ public class RestConfig extends Configuration {
                 .setOAuthAccessTokenSecret(accessTokenSecret);
         return configurationBuilder;
     }
-
 }

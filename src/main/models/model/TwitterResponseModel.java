@@ -43,7 +43,4 @@ public class TwitterResponseModel {
     public String getCreated() {
         return createdAt;
     }
-
 }
-
-
